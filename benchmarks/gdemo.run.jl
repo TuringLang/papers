@@ -3,8 +3,8 @@ using Turing
 using Stan
 
 include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
-include(splitdir(Base.@__DIR__)[1]*"/benchmarks/gauss.data.jl")
-include(splitdir(Base.@__DIR__)[1]*"/benchmarks/gauss.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/toy-models/gauss.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/toy-models/gauss.model.jl")
 
 tbenchmark("PG(20, 20)", "gaussmodel", "gaussdata")
 
