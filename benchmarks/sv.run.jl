@@ -2,12 +2,12 @@ using Distributions
 using Turing
 using Mamba: describe
 
-TPATH = Pkg.dir("Turing")
+TPATH = splitdir(Base.@__DIR__)[1]
 
-include(TPATH*"/example-models/nips-2017/sv.model.jl")
+include(TPATH*"/nips-2017/sv.model.jl")
 
 using HDF5, JLD
-sv_data = load(TPATH*"/example-models/nips-2017/sv-data.jld.data")["data"]
+sv_data = load(TPATH*"/nips-2017/sv-data.jld.data")["data"]
 
 # setadbackend(:forward_diff)
 # setchunksize(1000)

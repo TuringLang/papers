@@ -1,4 +1,4 @@
-odeDataRaw = readcsv(Pkg.dir("Turing")*"/example-models/benchmarks/ode.csv")
+odeDataRaw = readcsv(splitdir(Base.@__DIR__)[1]*"/benchmarks/ode.csv")
 t = Vector{Float64}(odeDataRaw[2:end,1])
 x0 = Vector{Float64}(odeDataRaw[2:end,2])
 x1 = Vector{Float64}(odeDataRaw[2:end,3])

@@ -1,4 +1,4 @@
-TPATH = Pkg.dir("Turing")
+TPATH = splitdir(Base.@__DIR__)[1]
 using HDF5, JLD
 
 # const ldastandata = [
@@ -49,9 +49,9 @@ using HDF5, JLD
 # ]
 
 
-# # const ldastandata = load(TPATH*"/example-models/stan-models/ldastandata.jld")["data"]
-# const ldastandata = load(TPATH*"/example-models/stan-models/ldastandataV20K2M25L100.data")["data"]
-const ldastandata = load(TPATH*"/example-models/stan-models/ldastandataV100K5M10L1000.data")["data"]
+# # const ldastandata = load(TPATH*"/stan-models/ldastandata.jld")["data"]
+# const ldastandata = load(TPATH*"/stan-models/ldastandataV20K2M25L100.data")["data"]
+const ldastandata = load(TPATH*"/stan-models/ldastandataV100K5M10L1000.data")["data"]
 
 # using PyCall
 # @pyimport pickle

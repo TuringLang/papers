@@ -1,7 +1,7 @@
 using Turing, Stan
 using Mamba: describe
 
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
 
 const binomialstanmodel = "
 // Inferring a Rate

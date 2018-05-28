@@ -2,8 +2,8 @@ using Stan
 
 # Model taken from https://github.com/goedman/Stan.jl/blob/master/Examples/Mamba/EightSchools/schools8.jl
 
-include(Pkg.dir("Turing")*"/example-models/stan-models/school8-stan.model.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/school8-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/school8-stan.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/school8-stan.data.jl")
 
 global stanmodel, rc, sim
 # stanmodel = Stanmodel(name="schools8", model=eightschools);

@@ -1,6 +1,6 @@
 using Distributions, Turing, HDF5, JLD, StatsFuns
 
-TPATH = Pkg.dir("Turing")
+TPATH = splitdir(Base.@__DIR__)[1]
 
 @model gmm_gen(p, μ, σ) = begin
   z ~ Categorical(p)

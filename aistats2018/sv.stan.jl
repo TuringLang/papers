@@ -1,5 +1,5 @@
-# https://github.com/stan-dev/example-models/blob/master/misc/moving-avg/stochastic-volatility.stan
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
+# https://github.com/stan-dev/blob/master/misc/moving-avg/stochastic-volatility.stan
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
 using Stan, HDF5, JLD
 
 const svstanmodel = "
@@ -25,7 +25,7 @@ model {
 }
 "
 
-sv_data = load(Pkg.dir("Turing")*"/example-models/nips-2017/sv-data.jld.data")["data"]
+sv_data = load(splitdir(Base.@__DIR__)[1]*"/nips-2017/sv-data.jld.data")["data"]
 
 svstan = Stanmodel(Sample(algorithm=Stan.Hmc(Stan.Static(0.5),Stan.diag_e(),0.05,0.0), save_warmup=true,adapt=Stan.Adapt(engaged=false)), num_samples=2000, num_warmup=0, thin=1, name="Stochastic_Volatility", model=svstanmodel, nchains=1);
 

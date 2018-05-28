@@ -1,4 +1,4 @@
-# https://github.com/stan-dev/example-models/blob/master/basic_estimators/bernoulli.stan
+# https://github.com/stan-dev/blob/master/basic_estimators/bernoulli.stan
 
 const berstanmodel = "
 data {

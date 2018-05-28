@@ -59,7 +59,7 @@ script:
                 include("./benchmarks/install_deps.jl");
                 include("./benchmarks/sv.run.jl")
              elseif ENV["GROUP"] == "NB"
-                include("./example-models/aistats2018/naive-bayes.run.jl")
+                include("./aistats2018/naive-bayes.run.jl")
              elseif ENV["GROUP"] == "Opt"
                 include("./benchmarks/install_deps.jl");
                 include("./benchmarks/optimization.jl")

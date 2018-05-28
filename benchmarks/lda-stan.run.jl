@@ -2,9 +2,9 @@ using Distributions
 using Turing
 using Stan
 
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/lda-stan.data.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/lda-stan.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda-stan.model.jl")
 
 stan_model_name = "LDA"
 # ldastan = Stanmodel(Sample(save_warmup=true), name=stan_model_name, model=ldastanmodel, nchains=1);

@@ -2,9 +2,9 @@ using Distributions
 using Turing
 using Stan
 
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
-include(Pkg.dir("Turing")*"/example-models/benchmarks/gauss.data.jl")
-include(Pkg.dir("Turing")*"/example-models/benchmarks/gauss.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/gauss.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/gauss.model.jl")
 
 tbenchmark("PG(20, 20)", "gaussmodel", "gaussdata")
 

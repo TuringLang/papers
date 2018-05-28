@@ -90,7 +90,7 @@ optRes *= ">>> Pre-allocation? <<<\n"
 optRes *= "LDA (normal): "
 
 
-include(Pkg.dir("Turing")*"/example-models/stan-models/lda-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda-stan.data.jl")
 
 run_total = 5
 
@@ -125,7 +125,7 @@ optRes *= "$ts, mean=$(mean(ts)), var=$(var(ts))\n"
 
 optRes *= "MoC (normal): "
 
-include(Pkg.dir("Turing")*"/example-models/stan-models/MoC-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/MoC-stan.data.jl")
 
 @model nbmodel(K, V, M, N, z, w, doc, alpha, beta) = begin
   theta ~ Dirichlet(alpha)
@@ -310,7 +310,7 @@ t_dualnumbers = @elapsed for _ = 1:(44*2000*5) ForwardDiff.Dual{Void, Float64, 4
 optRes *= "44*2000*5 times: $t_dualnumbers\n"
 
 
-# include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
+# include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
 # using Requests
 # import Requests: get, post, put, delete, options, FileParam
 # send_str(optRes, "optimization")

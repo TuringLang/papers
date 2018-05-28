@@ -1,4 +1,4 @@
-# Ref: https://github.com/stan-dev/example-models/blob/master/misc/moving-avg/stochastic-volatility.data.R
+# Ref: https://github.com/stan-dev/blob/master/misc/moving-avg/stochastic-volatility.data.R
 
 using Distributions
 
@@ -37,5 +37,5 @@ const sv_exact = Dict(
 
 using HDF5, JLD
 
-save(Pkg.dir("Turing")*"/example-models/nips-2017/sv-data.jld", "data", sv_data)
-# save(Pkg.dir("Turing")*"/example-models/nips-2017/sv-exact.jld", "exact", sv_exact)
+save(splitdir(Base.@__DIR__)[1]*"/nips-2017/sv-data.jld", "data", sv_data)
+# save(splitdir(Base.@__DIR__)[1]*"/nips-2017/sv-exact.jld", "exact", sv_exact)

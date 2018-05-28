@@ -2,8 +2,8 @@
 
 using Turing
 
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/binormal.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/binormal.model.jl")
 
 tbenchmark("HMC(20, 0.5, 5)", "binormal", "")
 
@@ -24,7 +24,7 @@ logd = Dict(
 
 # logd = build_logd("Binormal: sampling from the prior", bench_res...)
 
-include(Pkg.dir("Turing")*"/benchmarks/"*"binormal-stan.run.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/"*"binormal-stan.run.jl")
 
 # logd["stan"] = Dict("s" => mean(s_stan), "m" => mean(m_stan))
 logd["time_stan"] = get_stan_time("binormal")

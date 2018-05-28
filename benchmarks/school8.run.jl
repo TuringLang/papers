@@ -1,9 +1,9 @@
 using Turing
 using Mamba: describe
 
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/school8.model.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/school8-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/school8.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/school8-stan.data.jl")
 
 data = deepcopy(schools8data[1])
 delete!(data, "tau")
@@ -18,7 +18,7 @@ logd = build_logd("School 8", bench_res...)
 
 # describe(chn)
 
-include(Pkg.dir("Turing")*"/benchmarks/school8-stan.run.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/school8-stan.run.jl")
 
 logd["stan"] = stan_d
 logd["time_stan"] = get_stan_time("schools8")

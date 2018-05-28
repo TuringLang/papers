@@ -4,8 +4,8 @@ using Turing
 setadbackend(:reverse_diff)
 turnprogress(false)
 
-include(Pkg.dir("Turing")*"/example-models/stan-models/lda-stan.data.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/lda.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda.model.jl")
 
 sample(ldamodel(data=ldastandata[1]), HMC(2, 0.025, 10))
 Profile.clear()

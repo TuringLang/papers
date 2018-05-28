@@ -74,4 +74,4 @@ const ldastandata = [
 
 using HDF5, JLD
 
-save(Pkg.dir("Turing")*"/example-models/stan-models/ldastandata.jld", "data", ldastandata)
+save(splitdir(Base.@__DIR__)[1]*"/stan-models/ldastandata.jld", "data", ldastandata)

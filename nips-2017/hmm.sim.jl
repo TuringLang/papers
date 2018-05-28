@@ -1,4 +1,4 @@
-# Script adapted from https://github.com/stan-dev/example-models/blob/master/misc/hmm/hmm-semisup.data.R
+# Script adapted from https://github.com/stan-dev/blob/master/misc/hmm/hmm-semisup.data.R
 #
 # require(MCMCpack)
 #
@@ -94,4 +94,4 @@ const hmm_semisup_data = [
 
 using HDF5, JLD
 
-save(Pkg.dir("Turing")*"/example-models/nips-2017/hmm_semisup_data.jld", "data", hmm_semisup_data)
+save(splitdir(Base.@__DIR__)[1]*"/nips-2017/hmm_semisup_data.jld", "data", hmm_semisup_data)

@@ -1,4 +1,4 @@
-# Turing.jl version of model at https://github.com/stan-dev/example-models/blob/master/basic_estimators/normal_mixture.stan
+# Turing.jl version of model at https://github.com/stan-dev/blob/master/basic_estimators/normal_mixture.stan
 
 using StatsFuns
 using ForwardDiff: Dual

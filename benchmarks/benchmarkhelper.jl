@@ -88,7 +88,7 @@ send_log(logd::Dict, monitor=[]) = begin
   # log_str = log2str(logd, monitor)
   # send_str(log_str, logd["name"])
   dir_old = pwd()
-  cd(Pkg.dir("Turing"))
+  cd(splitdir(Base.@__DIR__)[1])
   commit_str = replace(split(readstring(pipeline(`git show --summary `, `grep "commit"`)), " ")[2], "\n", "")
   cd(dir_old)
   time_str = "$(Dates.format(now(), "dd-u-yyyy-HH-MM-SS"))"
@@ -99,7 +99,7 @@ end
 
 send_str(str::String, fname::String) = begin
   dir_old = pwd()
-  cd(Pkg.dir("Turing"))
+  cd(splitdir(Base.@__DIR__)[1])
   commit_str = replace(split(readstring(pipeline(`git show --summary `, `grep "commit"`)), " ")[2], "\n", "")
   cd(dir_old)
   time_str = "$(Dates.format(now(), "dd-u-yyyy-HH-MM-SS"))"

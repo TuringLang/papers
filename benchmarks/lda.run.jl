@@ -5,11 +5,11 @@ using Stan
 using Requests
 import Requests: get, post, put, delete, options, FileParam
 
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/lda-stan.data.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/lda.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda.model.jl")
 
-include(Pkg.dir("Turing")*"/benchmarks/"*"lda-stan.run.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/"*"lda-stan.run.jl")
 
 # setchunksize(100)
 setadbackend(:reverse_diff)

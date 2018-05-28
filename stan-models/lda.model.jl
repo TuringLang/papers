@@ -1,4 +1,4 @@
-# Turing.jl version of model at https://github.com/stan-dev/example-models/blob/master/misc/cluster/lda/lda.stan
+# Turing.jl version of model at https://github.com/stan-dev/blob/master/misc/cluster/lda/lda.stan
 
 # data {
 #   int<lower=2> K;               // num topics

@@ -1,6 +1,6 @@
 # NOTE: Stan codes are copied from https://github.com/goedman/Stan.jl/blob/master/Examples/NoMamba/ARM/Ch03/Kid/kidscore.jl
 
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
 
 using Mamba: describe
 using Stan

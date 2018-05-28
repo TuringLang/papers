@@ -1,7 +1,7 @@
 using Turing
 
-include(Pkg.dir("Turing")*"/example-models/aistats2018/high-dim-gauss.data.jl")
-include(Pkg.dir("Turing")*"/example-models/aistats2018/high-dim-gauss.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/aistats2018/high-dim-gauss.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/aistats2018/high-dim-gauss.model.jl")
 
 turnprogress(false)
 

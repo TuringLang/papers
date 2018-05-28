@@ -1,4 +1,4 @@
-include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
 using Stan, HDF5, JLD
 
 const nbstanmodel = "
@@ -23,7 +23,7 @@ model {
 }
 "
 
-const nbmnistdata = load(Pkg.dir("Turing")*"/example-models/aistats2018/nbstandata.jld")["data"]
+const nbmnistdata = load(splitdir(Base.@__DIR__)[1]*"/aistats2018/nbstandata.jld")["data"]
 
 nbstan = Stanmodel(Sample(algorithm=Stan.Hmc(Stan.Static(0.25),Stan.diag_e(),0.05,0.0), save_warmup=true,adapt=Stan.Adapt(engaged=false)), num_samples=500, num_warmup=0, thin=1, name="Naive_Bayes", model=nbstanmodel, nchains=1);
 

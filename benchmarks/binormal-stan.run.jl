@@ -1,5 +1,5 @@
-# include(Pkg.dir("Turing")*"/benchmarks/benchmarkhelper.jl")
-include(Pkg.dir("Turing")*"/example-models/stan-models/binormal-stan.model.jl")
+# include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/binormal-stan.model.jl")
 
 using Stan
 # using Mamba: describe

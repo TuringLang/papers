@@ -55,4 +55,4 @@ s_all = hstack(vs_all...)
 
 Gadfly.push_theme(:default)
 
-draw(PDF(TPATH*"/example-models/nips-2017/gmm-density-vary-np.pdf", (4*ncols)inch, (2*nrows)inch), s_all)
+draw(PDF(TPATH*"/nips-2017/gmm-density-vary-np.pdf", (4*ncols)inch, (2*nrows)inch), s_all)

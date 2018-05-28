@@ -1,8 +1,8 @@
 include("hmm.model.jl")
 
-TPATH = Pkg.dir("Turing")
+TPATH = splitdir(Base.@__DIR__)[1]
 using HDF5, JLD
-const hmm_semisup_data = load(TPATH*"/example-models/nips-2017/hmm_semisup_data.jld")["data"]
+const hmm_semisup_data = load(TPATH*"/nips-2017/hmm_semisup_data.jld")["data"]
 
 N = 1000
 
@@ -24,7 +24,7 @@ for i in 1:S
   #if i != 1 && i != 2 # i=1 already done
     chain = sample(hmm_semisup(data=hmm_semisup_data[1]), spls[i])
 
-    save(TPATH*"/example-models/nips-2017/hmm-uncollapsed-$(spl_names[i])-chain.jld", "chain", chain)
+    save(TPATH*"/nips-2017/hmm-uncollapsed-$(spl_names[i])-chain.jld", "chain", chain)
   #end
 end
 
@@ -36,5 +36,5 @@ spl_names = ["HMC($N,0.05,6)","HMCDA($N,200,0.65,0.35)","NUTS($N,200,0.65)","PG(
 for i in 1:S
   chain = sample(hmm_semisup(data=hmm_semisup_data[1]), spls[i])
 
-  save(TPATH*"/example-models/nips-2017/hmm-collapsed-$(spl_names[i])-chain.jld", "chain", chain)
+  save(TPATH*"/nips-2017/hmm-collapsed-$(spl_names[i])-chain.jld", "chain", chain)
 end
