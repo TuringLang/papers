@@ -19,7 +19,7 @@ optRes *= "$t1\n"
 optRes *= "Low-level API with symbol    : "
 
 @model m2() = begin
-  x = Turing.assume(nothing, Normal(0, 1), VarName(:x,:x,"",1), vi)
+  x = Turing.assume(nothing, Normal(0, 1), VarName(:x,:x,"",1), vi)[1]
 end
 
 f2 = m2()
@@ -58,7 +58,7 @@ optRes *= "Low-level API with expression: "
 
 @model m5() = begin
   x = Vector{Real}(1)
-  x[1] = Turing.assume(nothing, Normal(0, 1), VarName(:x,:x,"",1), vi)
+  x[1] = Turing.assume(nothing, Normal(0, 1), VarName(:x,:x,"",1), vi)[1]
 end
 
 f5 = m5()
