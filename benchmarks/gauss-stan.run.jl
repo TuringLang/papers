@@ -3,8 +3,8 @@ using Turing
 using Stan
 
 include(splitdir(Base.@__DIR__)[1]*"/benchmarks/benchmarkhelper.jl")
-include(splitdir(Base.@__DIR__)[1]*"/benchmarks/gdemo-stan.data.jl")
-include(splitdir(Base.@__DIR__)[1]*"/benchmarks/gdemo-stan.model.jl")
+include(splitdir(Base.@__DIR__)[1]*"/toy-models/gdemo-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/toy-models/gdemo-stan.model.jl")
 
 stan_model_name = "simplegauss"
 simplegaussstan = Stanmodel(name=stan_model_name, model=simplegaussstanmodel, nchains=1);
