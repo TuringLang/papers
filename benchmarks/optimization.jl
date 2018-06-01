@@ -91,21 +91,9 @@ optRes *= "LDA (normal): "
 
 
 include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda-stan.data.jl")
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/lda.model.jl")
 
 run_total = 5
-
-@model ldamodel_vec(K, V, M, N, w, doc, beta, alpha) = begin
-  theta = Matrix{Real}(K, M)
-  theta ~ [Dirichlet(alpha)]
-
-  phi = Matrix{Real}(V, K)
-  phi ~ [Dirichlet(beta)]
-
-  phi_dot_theta = log(phi * theta)
-
-  lp = mapreduce(n->phi_dot_theta[w[n], doc[n]], +, 1:N)
-  Turing.acclogp!(vi, lp)
-end
 
 ts = Float64[]
 for run = 1:run_total
@@ -126,25 +114,10 @@ optRes *= "$ts, mean=$(mean(ts)), var=$(var(ts))\n"
 optRes *= "MoC (normal): "
 
 include(splitdir(Base.@__DIR__)[1]*"/stan-models/MoC-stan.data.jl")
-
-@model nbmodel(K, V, M, N, z, w, doc, alpha, beta) = begin
-  theta ~ Dirichlet(alpha)
-  phi = Array{Any}(K)
-  for k = 1:K
-    phi[k] ~ Dirichlet(beta)
-  end
-
-  log_theta = log(theta)
-  Turing.acclogp!(vi, sum(log_theta[z]))
-
-  log_phi = map(x->log(x), phi)
-  lp = mapreduce(n->log_phi[z[doc[n]]][w[n]], +, 1:N)
-  Turing.acclogp!(vi, lp)
-
-  phi
-end
+include(splitdir(Base.@__DIR__)[1]*"/stan-models/MoC.model.jl")
 
 ts2 = Float64[]
+
 for run = 1:run_total
   ok = false
   chn = nothing
@@ -164,21 +137,6 @@ optRes *= "LDA (pre-alloc): "
 
 global theta = Matrix{Real}(2, 25)
 global phi = Matrix{Real}(5, 2)
-
-@model ldamodel_vec(K, V, M, N, w, doc, beta, alpha) = begin
-  global theta, phi
-
-  # theta = Matrix{Real}(K, M)
-  theta ~ [Dirichlet(alpha)]
-
-  # phi = Matrix{Real}(V, K)
-  phi ~ [Dirichlet(beta)]
-
-  phi_dot_theta = log(phi * theta)
-
-  lp = mapreduce(n->phi_dot_theta[w[n], doc[n]], +, 1:N)
-  Turing.acclogp!(vi, lp)
-end
 
 ts3 = Float64[]
 for run = 1:run_total

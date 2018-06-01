@@ -94,6 +94,6 @@ end
   #for n = 1:N
   #  Turing.acclogp!(vi, phi_dot_theta[w[n], doc[n]])
   #end
-  lp = mapreduce(n->phi_dot_theta[w[n], doc[n]], +, 1:N)
-  Turing.acclogp!(vi, lp)
+  _lp += mapreduce(n->phi_dot_theta[w[n], doc[n]], +, 1:N)
+
 end
