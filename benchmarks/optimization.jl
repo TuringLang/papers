@@ -123,7 +123,7 @@ for run = 1:run_total
   chn = nothing
   while ~ok
     try
-      chn = sample(nbmodel(data=nbstandata[1]), HMC(2000, 0.01, 5))
+      chn = sample(nbmodel(data=nbstandata[1]), HMC(100, 0.01, 5))
       ok = true
     end
   end
@@ -144,7 +144,7 @@ for run = 1:run_total
   chn = nothing
   while ~ok
     try
-      chn = sample(ldamodel_vec(data=ldastandata[1]), HMC(2000, 0.01, 5))
+      chn = sample(ldamodel_vec(data=ldastandata[1]), HMC(100, 0.01, 5))
       ok = true
     end
   end
@@ -187,7 +187,7 @@ for run = 1:run_total
   chn = nothing
   while ~ok
     try
-      chn = sample(nbmodel(data=nbstandata[1]), HMC(2000, 0.01, 5))
+      chn = sample(nbmodel(data=nbstandata[1]), HMC(100, 0.01, 5))
       ok = true
     end
   end
