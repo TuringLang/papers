@@ -1,0 +1,37 @@
+environment:
+  matrix:
+  - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6.2-win64.exe"
+    OS: w64
+  - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x86/0.6/julia-0.6.2-win32.exe"
+    OS: W32
+    
+matrix:
+  allow_failures: # Cairo.jl doesn't build on Win32; remove this when Cairo has a new release.
+  - OS: w32
+
+notifications:
+  - provider: Email
+    on_build_success: false
+    on_build_failure: false
+    on_build_status_changed: false
+
+cache:
+# Cache large downloads to avoid network unreliability
+  # - C:\Users\appveyor\.julia\v0.6
+
+install:
+  - ps: "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12"
+# Download most recent Julia Windows binary
+  - ps: (new-object net.webclient).DownloadFile(
+        $env:JULIA_URL,
+        "C:\projects\julia-binary.exe")
+# Run installer silently, output to C:\projects\julia
+  - C:\projects\julia-binary.exe /S /D=C:\projects\julia
+
+build_script:
+# Need to convert from shallow to complete for Pkg.clone to work
+  - IF EXIST .git\shallow (git fetch --unshallow)
+  - C:\projects\julia\bin\julia 'Pkg.update(); Pkg.add("Turing"); Pkg.checkout("Turing"); Pkg.build("Turing")''
+
+test_script:
+  - C:\projects\julia\bin\julia --check-bounds=yes -e 'include("./benchmarks/install_deps.jl"); include("./benchmarks/benchmark.jl");'
