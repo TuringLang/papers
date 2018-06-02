@@ -32,12 +32,12 @@ matrix:
        - os: osx
          env: GROUP=Opt
 
-    allow_failures:
-       - env: GROUP=Bench
-       - env: GROUP=LDA
-       - env: GROUP=MOC
-       - env: GROUP=SV
-       - env: GROUP=Opt
+    # allow_failures:
+    #    - env: GROUP=Bench
+    #    - env: GROUP=LDA
+    #    - env: GROUP=MOC
+    #    - env: GROUP=SV
+    #    - env: GROUP=Opt
 
 notifications:
     email: false
