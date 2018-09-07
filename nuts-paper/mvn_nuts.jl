@@ -1,4 +1,4 @@
-using Distributions
+using Distributions, LinearAlgebra
 using Turing
 
 # 250-dimensional multivariate normal (MVN)
