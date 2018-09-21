@@ -1,0 +1,69 @@
+ method = sample (Default)
+   sample
+     num_samples = 1200
+     num_warmup = 1000 (Default)
+     save_warmup = 0 (Default)
+     thin = 1 (Default)
+     adapt
+       engaged = 1 (Default)
+       gamma = 0.050000000000000003 (Default)
+       delta = 0.80000000000000004 (Default)
+       kappa = 0.75 (Default)
+       t0 = 10 (Default)
+       init_buffer = 75 (Default)
+       term_buffer = 50 (Default)
+       window = 25 (Default)
+     algorithm = hmc (Default)
+       hmc
+         engine = nuts (Default)
+           nuts
+             max_depth = 10 (Default)
+         metric = diag_e (Default)
+         stepsize = 1 (Default)
+         stepsize_jitter = 1
+ id = 1
+ data
+   file = bernoulli_1.data.R
+ init = 2 (Default)
+ random
+   seed = 1208049082
+ output
+   file = bernoulli_samples_1.csv
+   diagnostic_file =  (Default)
+   refresh = 100 (Default)
+
+
+Gradient evaluation took 5e-06 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+Adjust your expectations accordingly!
+
+
+Iteration:    1 / 2200 [  0%]  (Warmup)
+Iteration:  100 / 2200 [  4%]  (Warmup)
+Iteration:  200 / 2200 [  9%]  (Warmup)
+Iteration:  300 / 2200 [ 13%]  (Warmup)
+Iteration:  400 / 2200 [ 18%]  (Warmup)
+Iteration:  500 / 2200 [ 22%]  (Warmup)
+Iteration:  600 / 2200 [ 27%]  (Warmup)
+Iteration:  700 / 2200 [ 31%]  (Warmup)
+Iteration:  800 / 2200 [ 36%]  (Warmup)
+Iteration:  900 / 2200 [ 40%]  (Warmup)
+Iteration: 1000 / 2200 [ 45%]  (Warmup)
+Iteration: 1001 / 2200 [ 45%]  (Sampling)
+Iteration: 1100 / 2200 [ 50%]  (Sampling)
+Iteration: 1200 / 2200 [ 54%]  (Sampling)
+Iteration: 1300 / 2200 [ 59%]  (Sampling)
+Iteration: 1400 / 2200 [ 63%]  (Sampling)
+Iteration: 1500 / 2200 [ 68%]  (Sampling)
+Iteration: 1600 / 2200 [ 72%]  (Sampling)
+Iteration: 1700 / 2200 [ 77%]  (Sampling)
+Iteration: 1800 / 2200 [ 81%]  (Sampling)
+Iteration: 1900 / 2200 [ 86%]  (Sampling)
+Iteration: 2000 / 2200 [ 90%]  (Sampling)
+Iteration: 2100 / 2200 [ 95%]  (Sampling)
+Iteration: 2200 / 2200 [100%]  (Sampling)
+# 
+#  Elapsed Time: 0.011399 seconds (Warm-up)
+#                0.020915 seconds (Sampling)
+#                0.032314 seconds (Total)
+# 
