@@ -1,3 +1,5 @@
+# Ported from PyMC3 example: https://docs.pymc.io/notebooks/GLM-negative-binomial-regression.html
+
 # This file shows how to write setup code and model for Negative Binomial
 # Regression.
 
