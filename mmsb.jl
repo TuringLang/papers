@@ -37,7 +37,7 @@ end
 pyplot()
 heatmap(graph, title = "Heatmap of Original Graph")
 gui()
-graphplot(graph, reuse = false, title = "Original Graph")
+graphplot(graph, markersize = 10, reuse = false, title = "Original Graph")
 gui()
 
 # Define the model
