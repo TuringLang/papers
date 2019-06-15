@@ -1,3 +1,8 @@
+#=
+This file is an implementation of the Mixed Membership Stochastic Blockmodel
+Reference: Airoldi, Edoardo M., et al. "Mixed membership stochastic blockmodels." Journal of machine learning research 9.Sep (2008): 1981-2014.
+=#
+
 #Import Turing, Distributions, LinearAlgebra and DataFrames
 using Turing, Distributions, LinearAlgebra, DataFrames
 
@@ -110,6 +115,7 @@ end
 heatmap(graph_pred, title = "Heatmap of Predicted Graph")
 gui()
 
+# Numerically count the number of mismatches between the reconstructed and the original graphs
 global non_zero
 graph_diff = graph - graph_pred
 non_zero = 0
