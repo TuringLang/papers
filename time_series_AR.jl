@@ -19,7 +19,8 @@ for ele in df[:Sales]
     push!(s, ele)
 end
 pyplot()
-plot(s)
+plot(s, reuse = false, title = "Shampoo dataset")
+gui()
 
 # Split into training and test sets. We will predict for the next 4 days using the data from the past 32 days
 train_percentage = 0.9
@@ -27,12 +28,14 @@ s_train = s[1:floor(Int, train_percentage*length(s))]
 N = length(s_train)
 
 # Plot the training data
-plot(s_train)
+plot(s_train, reuse = false, title = "Train Data")
+gui()
 
 #Plot ACF and PACF plots. The PACF plot cuts off at k = 2, so we will have an AR(2) model for this dataset.
 s1 = scatter([1, 2, 3, 4, 5], autocor(s, [1, 2, 3, 4, 5]), title = "ACF")
 s2 = scatter([1, 2, 3, 4, 5], pacf(s, [1, 2, 3, 4, 5]), title = "PACF")
-plot(s1, s2, layout = (2, 1))
+plot(s1, s2, layout = (2, 1), reuse = false)
+gui()
 
 #Defining the model
 σ = 1
@@ -58,10 +61,12 @@ chain = sample(AR(s_train, N), NUTS(500, 200, 0.65) )
 
 #Plotting the chain distribution of the sampled parameters and their values over the 500 iterations
 #Note that roughly the first 50 samples are the warmup samples that we will remove later on
-plot(chain)
+plot(chain, reuse = false, title = "Sampler Plot")
+gui()
 
 #Plotting the corner plot for the chain
-corner(chain)
+corner(chain, reuse = false, title = "Corner Plot")
+gui()
 
 #Removing the warmup samples
 chains_new = chain[50:500]
@@ -85,5 +90,9 @@ for i=3:length(s_test)
 end
 
 #Plotting the test and the predicted data for comparison
-plot(s_test)
+plot(s_test, reuse = false, title = "Predicted vs Test Comparison")
 plot!(s_pred)
+gui()
+
+println("Press ENTER to exit")
+read(stdin, Char)
