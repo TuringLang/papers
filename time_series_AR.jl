@@ -2,7 +2,7 @@
 #Import Turing, Distributions, StatsBase, DataFrames and CSV
 using Turing, Distributions, StatsBase, DataFrames, CSV
 
-# Import MCMCChain, Plots and StatsPlots
+# Import MCMCChain, Plots and StatsPlots for visualizations and diagnostics
 using MCMCChains, Plots, StatsPlots
 
 # Set a seed for reproducibility.
