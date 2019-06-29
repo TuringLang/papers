@@ -24,7 +24,6 @@ plot(s, reuse = false, title = "Plot of the Time Series")
 gui()
 
 #Define the model
-
 σ = 1
 @model MA(x, N) = begin
     beta_1 ~ Uniform(-1, 1)
@@ -46,7 +45,7 @@ println("Sampling using NUTS...")
 # δ::Float64 : Target acceptance rate.
 chain = sample(MA(s, N), NUTS(500, 200, 0.65) )
 
-# Print the summary of the sampled parameters
+println("Summary of the sampled chain:")
 show(chain)
 
 println("Plotting the chain distribution of the sampled parameters and their values over the 500 iterations")
