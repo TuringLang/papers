@@ -13,6 +13,7 @@ Random.seed!(12);
 Turing.turnprogress(false)
 
 # Load in the shampoo dataset (can be downloaded from https://raw.githubusercontent.com/jbrownlee/Datasets/master/shampoo.csv)
+println("Loading the dataset")
 df = CSV.read("shampoo.csv")
 s = Float64[]
 for ele in df[:Sales]
@@ -22,20 +23,21 @@ pyplot()
 plot(s, reuse = false, title = "Shampoo dataset")
 gui()
 
-# Split into training and test sets. We will predict for the next 4 days using the data from the past 32 days
+println("Split into training and test sets. We will predict for the next 4 days using the data from the past 32 days")
 train_percentage = 0.9
 s_train = s[1:floor(Int, train_percentage*length(s))]
 N = length(s_train)
 
-# Plot the training data
+println("Plot the training data")
 plot(s_train, reuse = false, title = "Train Data")
 gui()
 
-#Plot ACF and PACF plots. The PACF plot cuts off at k = 2, so we will have an AR(2) model for this dataset.
+println("Plotting ACF and PACF plots") 
 s1 = scatter([1, 2, 3, 4, 5], autocor(s, [1, 2, 3, 4, 5]), title = "ACF")
 s2 = scatter([1, 2, 3, 4, 5], pacf(s, [1, 2, 3, 4, 5]), title = "PACF")
 plot(s1, s2, layout = (2, 1), reuse = false)
 gui()
+println("The PACF plot cuts off at k = 2, so we will have an AR(2) model for this dataset.")
 
 #Defining the model
 σ = 1
@@ -52,15 +54,10 @@ end;
 # This is temporary while the reverse differentiation backend is being improved.
 Turing.setadbackend(:forward_diff)
 
-# Sample using NUTS(n_iters::Int, n_adapts::Int, δ::Float64), where:
-# n_iters::Int : The number of samples to pull.
-# n_adapts::Int : The number of samples to use with adapatation.
-# δ::Float64 : Target acceptance rate.
-
+println("Sampling using NUTS...")
 chain = sample(AR(s_train, N), NUTS(500, 200, 0.65) )
 
-#Plotting the chain distribution of the sampled parameters and their values over the 500 iterations
-#Note that roughly the first 50 samples are the warmup samples that we will remove later on
+println("Chain has been sampled ; Now let us visualise it!")
 plot(chain, reuse = false, title = "Sampler Plot")
 gui()
 
@@ -68,17 +65,19 @@ gui()
 corner(chain, reuse = false, title = "Corner Plot")
 gui()
 
-#Removing the warmup samples
+println("Removing the warmup samples...")
 chains_new = chain[50:500]
+show(chains_new)
 
 # Getting the mean values of the sampled parameters
 beta_1 = mean(chains_new[:beta_1].value)
 beta_2 = mean(chains_new[:beta_2].value)
 
-#Obtaining the test data
+
+println("Obtaining the test data")
 s_test = s[N + 1:length(s)]
 
-#Obtaining the predicted results using the AR(2) definition
+println("Obtaining the predicted results using the mean values of beta_1 and beta_2")
 s_pred = Float64[]
 first_ele =  s_train[N]*beta_1 + s_train[N - 1]*beta_2 + rand(Normal(0,1))
 push!(s_pred, first_ele)
@@ -89,7 +88,7 @@ for i=3:length(s_test)
     push!(s_pred, next_ele)
 end
 
-#Plotting the test and the predicted data for comparison
+println("Plotting the test and the predicted data for comparison")
 plot(s_test, reuse = false, title = "Predicted vs Test Comparison")
 plot!(s_pred)
 gui()
