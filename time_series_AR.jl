@@ -37,7 +37,7 @@ s1 = scatter([1, 2, 3, 4, 5], autocor(s, [1, 2, 3, 4, 5]), title = "ACF")
 s2 = scatter([1, 2, 3, 4, 5], pacf(s, [1, 2, 3, 4, 5]), title = "PACF")
 plot(s1, s2, layout = (2, 1), reuse = false)
 gui()
-println("The PACF plot cuts off at k = 2, so we will have an AR(2) model for this dataset.")
+println("The PACF plot cuts off at k = 2, so we will have an AR(2) model for this dataset")
 
 #Defining the model
 σ = 1
@@ -57,7 +57,7 @@ Turing.setadbackend(:forward_diff)
 println("Sampling using NUTS...")
 chain = sample(AR(s_train, N), NUTS(500, 200, 0.65) )
 
-println("Chain has been sampled ; Now let us visualise it!")
+println("Chain has been sampled; Now let us visualise it!")
 plot(chain, reuse = false, title = "Sampler Plot")
 gui()
 
