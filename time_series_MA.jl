@@ -11,7 +11,7 @@ Random.seed!(12);
 # Turn off progress monitor.
 Turing.turnprogress(false)
 
-# Manually generate data
+println("Generating data...")
 N = 500
 s = zeros(N)
 μ = 5
@@ -39,7 +39,11 @@ end;
 # This is temporary while the reverse differentiation backend is being improved.
 Turing.setadbackend(:forward_diff)
 
-# Sample using HMC
+println("Sampling using NUTS...")
+# NUTS(n_iters::Int, n_adapts::Int, δ::Float64), where:
+# n_iters::Int : The number of samples to pull.
+# n_adapts::Int : The number of samples to use with adapatation.
+# δ::Float64 : Target acceptance rate.
 chain = sample(MA(s, N), NUTS(500, 200, 0.65) )
 
 # Print the summary of the sampled parameters
@@ -57,6 +61,8 @@ println("Removing these warmup samples...")
 
 chain_new = chain[50:500]
 
+println("Summary of the new chain:")
+show(chain_new)
 plot(chain_new, reuse = false, title = "Sampler Plot (warmup samples removed)")
 gui()
 corner(chain_new, reuse = false, title = "Corner Plot (warmup samples removed")
