@@ -89,8 +89,8 @@ for i=3:length(s_test)
 end
 
 println("Plotting the test and the predicted data for comparison")
-plot(s_test, reuse = false, title = "Predicted vs Test Comparison")
-plot!(s_pred)
+plot(s_test, reuse = false, title = "Predicted vs Test Comparison", label = "Test")
+plot!(s_pred, label = "Predicted")
 gui()
 
 println("Press ENTER to exit")
