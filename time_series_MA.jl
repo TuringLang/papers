@@ -29,8 +29,10 @@ gui()
     beta_1 ~ Uniform(-1, 1)
     beta_2 ~ Uniform(-1, 1)
     μ ~ Uniform(0, 10)
+    delta_1 ~ Normal(0, 1)
+    delta_2 ~ Normal(0, 1)
     for t in 3:N
-        val = μ + rand(Normal(0,σ)) + beta_1 * rand(Normal(0, 1)) + beta_2 * rand(Normal(0, 1)) 
+        val = μ + beta_1 * delta_1 + beta_2 * delta_2 
         x[t] ~ Normal(val, 1) 
     end
 end;
