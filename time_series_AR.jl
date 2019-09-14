@@ -14,11 +14,8 @@ Turing.turnprogress(false)
 
 # Load in the shampoo dataset (can be downloaded from https://raw.githubusercontent.com/jbrownlee/Datasets/master/shampoo.csv)
 println("Loading the dataset")
-df = CSV.read("shampoo.csv")
-s = Float64[]
-for ele in df[:Sales]
-    push!(s, ele)
-end
+df = CSV.read("../data/shampoo.csv")
+s = df.Sales
 pyplot()
 plot(s, reuse = false, title = "Shampoo dataset")
 gui()
@@ -33,14 +30,14 @@ plot(s_train, reuse = false, title = "Train Data")
 gui()
 
 println("Plotting ACF and PACF plots") 
-s1 = scatter([1, 2, 3, 4, 5], autocor(s, [1, 2, 3, 4, 5]), title = "ACF")
-s2 = scatter([1, 2, 3, 4, 5], pacf(s, [1, 2, 3, 4, 5]), title = "PACF")
+s1 = scatter([1, 2, 3, 4, 5], autocor(s, [1, 2, 3, 4, 5]), title = "ACF", ylim = [0.3,0.8])
+s2 = scatter([1, 2, 3, 4, 5], pacf(s, [1, 2, 3, 4, 5]), title = "PACF", ylim = [0.3,0.8])
 plot(s1, s2, layout = (2, 1), reuse = false)
 gui()
 println("The PACF plot cuts off at k = 2, so we will have an AR(2) model for this dataset")
 
 #Defining the model
-σ = 1
+σ = 1.0
 @model AR(x, N) = begin
     α ~ Normal(0,σ) 
     beta_1 ~ Uniform(-1, 1)
@@ -51,11 +48,12 @@ println("The PACF plot cuts off at k = 2, so we will have an AR(2) model for thi
     end
 end;
 
-# This is temporary while the reverse differentiation backend is being improved.
-Turing.setadbackend(:forward_diff)
+# Sample using NUTS(n_iters::Int, n_adapts::Int, δ::Float64), where:
+# n_iters::Int : The number of samples to pull.
+# n_adapts::Int : The number of samples to use with adapatation.
+# δ::Float64 : Target acceptance rate.
 
-println("Sampling using NUTS...")
-chain = sample(AR(s_train, N), NUTS(500, 200, 0.65) )
+chain = sample(AR(s_train, N), NUTS(5000, 200, 0.65) )
 
 println("Chain has been sampled; Now let us visualise it!")
 plot(chain, reuse = false, title = "Sampler Plot")
@@ -66,7 +64,7 @@ corner(chain, reuse = false, title = "Corner Plot")
 gui()
 
 println("Removing the warmup samples...")
-chains_new = chain[50:500]
+chains_new = chain[50:4800]
 show(chains_new)
 
 # Getting the mean values of the sampled parameters
