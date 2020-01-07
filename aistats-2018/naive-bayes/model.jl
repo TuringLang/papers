@@ -7,7 +7,7 @@ Turing.setadbackend(:reverse_diff)
     
     m = Matrix{T}(undef, D, C)
     for c = 1:C
-        m[:,c] ~ MvNormal(fill(0.0, D_pca), fill(1.0, D_pca))
+        m[:,c] ~ MvNormal(fill(0.0, D_pca), fill(10.0, D_pca))
     end
 
     Threads.@threads for n = 1:N
@@ -17,4 +17,4 @@ end
 
 # Model function
 
-get_model() = naive_bayes
+get_model(args...) = naive_bayes(args...)

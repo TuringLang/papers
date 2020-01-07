@@ -5,8 +5,6 @@ using MLDatasets
 image_raw = MNIST.convert2features(MNIST.traintensor(Float64))
 label = MNIST.trainlabels() .+ 1
 
-@info "Data size" size.((image_raw, label))
-
 # Pre-processing
 
 using MultivariateStats
@@ -16,8 +14,14 @@ pca = fit(PCA, image_raw; maxoutdim=D_pca)
 
 image = transform(pca, image_raw)
 
-@info "Processed data size" size(image)
+@info "Peformed PCA to reduce the dimension to $D_pca"
 
 # Data function
 
-get_data(n=1_000) = tuple(image[:,1:n], label[1:n], 10)
+get_data(n=1_000) = Dict(
+    "C" => 10, 
+    "D" => D_pca, 
+    "N" => n, 
+    "image" => image[:,1:n], 
+    "label" => label[1:n]
+)

@@ -4,16 +4,15 @@ include("model.jl")
 # Do inference
 
 using Random: seed!
-
 seed!(1)
 
-model = get_model()(get_data()...)
+data = get_data()
+
+model = get_model(data["image"], data["label"], data["C"])
 
 chain = sample(model, HMC(0.1, 4), 2_000, progress_style=:plain)
 
-# Save results
-
-using BSON
+# Save result
 
 m_data = chain[:m].value.data
 
