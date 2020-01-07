@@ -1,0 +1,1 @@
+get_data(d=100_000) = Dict("D" => d)
