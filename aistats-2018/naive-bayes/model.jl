@@ -1,7 +1,3 @@
-using Turing
-
-Turing.setadbackend(:reverse_diff)
-
 @model naive_bayes(image, label, C, ::Type{T}=Float64) where {T<:Real} = begin
     D, N = size(image)
     

@@ -1,12 +1,15 @@
-include("data.jl")
-include("model.jl")
-
-# Do inference
-
 using Random: seed!
 seed!(1)
 
+include("data.jl")
+
 data = get_data()
+
+using Turing
+
+include("model.jl")
+
+Turing.setadbackend(:reverse_diff)
 
 model = get_model(data["image"], data["label"], data["C"])
 
