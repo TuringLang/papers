@@ -1,21 +1,23 @@
+include("data.jl")
+
 const high_dim_gauss_str = "
 data {
   int D;
 }
 parameters {
-  real mu[D];
+  real m[D];
 }
 model {
 for (d in 1:D)
-    mu[d] ~ normal(0, 1);
+    m[d] ~ normal(0, 1);
 }
 "
 
 using CmdStan
 
 high_dim_gauss_model = Stanmodel(
-    name="NaiveBayes", 
-    model=naive_bayes_str, 
+    name="HighDimGauss", 
+    model=high_dim_gauss_str, 
     nchains=1,
     Sample(
         algorithm=CmdStan.Hmc(
@@ -31,4 +33,4 @@ high_dim_gauss_model = Stanmodel(
     ),
 )
 
-status, chain = stan(high_dim_gauss_model, get_data(), summary=true)
+@time status, chain = stan(high_dim_gauss_model, get_data(), summary=false)

@@ -42,4 +42,4 @@ naive_bayes_model = Stanmodel(
     ),
 )
 
-status, chain = stan(naive_bayes_model, get_data(), summary=true)
+@time status, chain = stan(naive_bayes_model, get_data(), summary=false)
