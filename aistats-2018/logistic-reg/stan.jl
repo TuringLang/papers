@@ -20,11 +20,8 @@ parameters {
   vector[D] w;
 }
 transformed parameters {
-  vector[N] v;
   vector[N] p;
-  v = XT * w;
-  for (n in 1:N)
-    p[n] = inv_logit(v[n]);
+  p = inv_logit(XT * w);
 }
 model {
   w ~ normal(0, 1);
