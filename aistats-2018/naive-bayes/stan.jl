@@ -1,6 +1,11 @@
+using Random: seed!
+seed!(1)
+
 include("data.jl")
 
-const naive_bayes_str = "
+get_data()
+
+const model_str = "
 data {
   int C;
   int D;
@@ -22,25 +27,8 @@ model {
 }
 "
 
-using CmdStan
+model_name = "NaiveBayes"
 
-naive_bayes_model = Stanmodel(
-    name="NaiveBayes", 
-    model=naive_bayes_str, 
-    nchains=1,
-    Sample(
-        algorithm=CmdStan.Hmc(
-            CmdStan.Static(0.4),
-            CmdStan.diag_e(),
-            0.1,
-            0.0,
-        ),
-        num_warmup=0,
-        num_samples=2_000,
-        adapt=CmdStan.Adapt(engaged=false),
-        save_warmup=true,
-    ),
-    printsummary=false,
-  output_format=:array
-)
-@time status, chain = stan(naive_bayes_model, get_data(), summary=false)
+include("../infer_stan.jl")
+
+;

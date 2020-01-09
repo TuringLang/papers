@@ -1,12 +1,18 @@
+alg = HMC(0.1, 4)
+n_samples = 2_000
+
 chain = nothing
 
 if "--benchmark" in ARGS
+    using Logging: with_logger, NullLogger
     using Statistics: mean, std
     n_runs = 3
     times = []
     for i in 1:n_runs+1
-        t = @elapsed sample(model, alg, n_samples; progress=false, raw_output=true)
-        push!(times, t)
+        with_logger(NullLogger()) do
+            t = @elapsed sample(model, alg, n_samples; progress=false, raw_output=true)
+            push!(times, t)
+        end
     end
     t_with_compilation = times[1]
     t_mean = mean(times[2:end])

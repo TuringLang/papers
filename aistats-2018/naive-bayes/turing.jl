@@ -9,14 +9,20 @@ using Turing
 
 Turing.setadbackend(:reverse_diff)
 
-include("model.jl")
+@model naive_bayes(image, label, D, N, C, ::Type{T}=Float64) where {T<:Real} = begin
+    m = Matrix{T}(undef, D, C)
+    for c = 1:C
+        m[:,c] ~ MvNormal(fill(0, D), 10)
+    end
 
-model = get_model(data["image"], data["label"], data["D"], data["N"], data["C"])
+    Threads.@threads for n = 1:N
+        image[:,n] ~ MvNormal(m[:,label[n]], 1)
+    end
+end
 
-alg = HMC(0.1, 4)
-n_samples = 2_000
+model = naive_bayes(data["image"], data["label"], data["D"], data["N"], data["C"])
 
-include("../infer.jl")
+include("../infer_turing.jl")
 
 # Save result
 
