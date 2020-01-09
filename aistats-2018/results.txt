@@ -1,13 +1,36 @@
+---
 Benchmarking high-dim-gauss
 [turing]
 Benchmark results
-  Compilation time: 11.964737370666665 (approximately)
-  Running time: 4.111006011333333 +/- 0.12623372466508817 (3 runs)
-
+  Compilation time: 10.704971830999998 (approximately)
+  Running time: 8.232920991 +/- 0.14421749537806824 (3 runs)
 [stan]
 
 File /Users/kai/projects/TuringLang/TuringExamples/aistats-2018/tmp/noname.stan will be updated.
 
 Benchmark results
-  Running time: 12.192433333333334 +/- 0.22334503203190653 (3 runs)
+  Running time: 11.993233333333334 +/- 0.1848190015483614 (3 runs)
+---
+Benchmarking naive-bayes
+[turing]
+Benchmark results
+  Compilation time: 11.287464384 (approximately)
+  Running time: 7.616931909000001 +/- 0.06308603179969116 (3 runs)
+[stan]
 
+File /Users/kai/projects/TuringLang/TuringExamples/aistats-2018/tmp/noname.stan will be updated.
+
+Benchmark results
+  Running time: 14.492266666666668 +/- 0.6383043892480559 (3 runs)
+---
+Benchmarking logistic-reg
+[turing]
+Benchmark results
+  Compilation time: 11.417524385666667 (approximately)
+  Running time: 4.225121738333333 +/- 1.3928859109776388 (3 runs)
+[stan]
+
+File /Users/kai/projects/TuringLang/TuringExamples/aistats-2018/tmp/noname.stan will be updated.
+
+Benchmark results
+  Running time: 61.90966666666667 +/- 0.09382373544755875 (3 runs)

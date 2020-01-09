@@ -10,7 +10,7 @@ using Turing
 Turing.setadbackend(:reverse_diff)
 
 @model high_dim_gauss(D) = begin
-    m ~ MvNormal(fill(0, D), 1)
+    m ~ Multi(Normal(), D)
 end
 
 model = high_dim_gauss(data["D"])

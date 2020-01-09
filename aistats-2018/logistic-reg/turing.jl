@@ -11,9 +11,9 @@ Turing.setadbackend(:reverse_diff)
 
 @model logistic_reg(X, y) = begin
     D, N = size(X)
-    w ~ MvNormal(fill(0, D), 1)
+    w ~ Multi(Normal(), D)
     p = logistic.(X' * w)
-    y .~ Bernoulli.(p)
+    y ~ ArrayDist(Bernoulli.(p))
 end
 
 model = logistic_reg(data["X"], data["y"])

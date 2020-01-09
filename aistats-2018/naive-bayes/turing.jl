@@ -10,15 +10,9 @@ using Turing
 Turing.setadbackend(:reverse_diff)
 
 @model naive_bayes(image, label, D, N, C, ::Type{T}=Float64) where {T<:Real} = begin
-    m = Matrix{T}(undef, D, C)
-    for c = 1:C
-        m[:,c] ~ MvNormal(fill(0, D), 10)
-    end
-
-    Threads.@threads for n = 1:N
-        image[:,n] ~ MvNormal(m[:,label[n]], 1)
-    end
-end
+    m ~ Multi(Normal(0.0, 10.0), D, C)
+    image ~ ArrayDist(Normal.(m[:,label], 1))
+end 
 
 model = naive_bayes(data["image"], data["label"], data["D"], data["N"], data["C"])
 
