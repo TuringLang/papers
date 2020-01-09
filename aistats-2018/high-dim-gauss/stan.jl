@@ -3,7 +3,7 @@ seed!(1)
 
 include("data.jl")
 
-get_data()
+data = get_data()
 
 const model_str = "
 data {

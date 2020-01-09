@@ -3,7 +3,7 @@ seed!(1)
 
 include("data.jl")
 
-get_data()
+data = get_data()
 
 const model_str = "
 data {
@@ -26,8 +26,6 @@ model {
         image[d,n] ~ normal(m[d,label[n]], 1);
 }
 "
-
-model_name = "NaiveBayes"
 
 include("../infer_stan.jl")
 
