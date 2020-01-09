@@ -31,6 +31,10 @@ high_dim_gauss_model = Stanmodel(
         adapt=CmdStan.Adapt(engaged=false),
         save_warmup=true,
     ),
+    printsummary=false,
+    output_format=:array
 )
 
 @time status, chain = stan(high_dim_gauss_model, get_data(), summary=false)
+
+;

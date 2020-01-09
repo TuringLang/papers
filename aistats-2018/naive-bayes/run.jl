@@ -7,35 +7,30 @@ data = get_data()
 
 using Turing
 
-include("model.jl")
-
 Turing.setadbackend(:reverse_diff)
 
-model = get_model(data["image"], data["label"], data["C"])
+include("model.jl")
+
+model = get_model(data["image"], data["label"], data["D"], data["N"], data["C"])
 
 alg = HMC(0.1, 4)
 n_samples = 2_000
 
-if "--benchmark" in ARGS
-    times = []
-    for i in 1:5
-        t = @elapsed chain = sample(model, alg, n_samples, progress=false)
-        push!(times, t)
-    end
-    println(times)
-else
-    chain = sample(model, alg, n_samples, progress_style=:plain)
-end
+include("../infer.jl")
 
 # Save result
 
-m_data = chain[:m].value.data
+if !isnothing(chain)
+    using BSON
 
-m_bayes = mean(
-    map(
-        i -> reconstruct(pca, Matrix{Float64}(reshape(m_data[i,:,1], D_pca, 10))), 
-        1_000:100:2_000
+    m_data = chain[:m].value.data
+
+    m_bayes = mean(
+        map(
+            i -> reconstruct(pca, Matrix{Float64}(reshape(m_data[i,:,1], D_pca, 10))), 
+            1_000:100:2_000
+        )
     )
-)
 
-bson("result.bson", m_bayes=m_bayes)
+    bson("result.bson", m_bayes=m_bayes)
+end

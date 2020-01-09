@@ -40,6 +40,7 @@ naive_bayes_model = Stanmodel(
         adapt=CmdStan.Adapt(engaged=false),
         save_warmup=true,
     ),
+    printsummary=false,
+  output_format=:array
 )
-
 @time status, chain = stan(naive_bayes_model, get_data(), summary=false)
