@@ -8,7 +8,7 @@ models = [
     "naive_bayes",
     "logistic_reg",
     "sto_volatility",
-    # "lda",
+    "lda",
 ]
 
 for m in models
@@ -36,24 +36,30 @@ end
 
 @info "Benchmark config" results_fn models ppls
 
-open("$results_fn.txt", "w") do io
+let buffer=IOBuffer()   # use IOBuffer to deplay writing to the file in the end
     for model in models
-        write(io, "---\n")
-        write(io, "$model\n")
-        write(io, "---\n")
+        write(buffer, "---\n")
+        write(buffer, "$model\n")
+        write(buffer, "---\n")
         for ppl in ppls
-            write(io, "[$ppl]\n")
+            write(buffer, "[$ppl]\n")
             @info "Benchmarking $model using $ppl ..."
             cmd = `julia $model/$ppl.jl --benchmark`
             if "WANDB" in keys(ENV) && ENV["WANDB"] == "1"
+                # Logging to W&B
                 withenv("MODEL_NAME" => model) do
                     res = read(cmd, String)
                 end
             else
                 res = read(cmd, String)
             end
-            write(io, res)
+            write(buffer, res)
         end
-        write(io, "\n")
+        write(buffer, "\n")
+    end
+    # Write to file
+    results = take!(buffer)
+    open("$results_fn.txt", "w") do file
+        write(file, results)
     end
 end

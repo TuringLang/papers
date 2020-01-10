@@ -21,8 +21,9 @@ model = Stanmodel(
 
 if "--benchmark" in ARGS
     using Statistics: mean, std
-    clog = "MODEL_NAME" in keys(ENV)
+    clog = "MODEL_NAME" in keys(ENV)    # cloud logging flag
     if clog
+        # Setup W&B
         using PyCall: pyimport
         wandb = pyimport("wandb")
         wandb.init(project="turing-benchmark")

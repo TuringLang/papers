@@ -2,3 +2,13 @@
 lda
 ---
 [turing]
+Benchmark results
+  Compilation time: 44.35045612599998 (approximately)
+  Running time: 378.761714601 +/- 7.909938774234817 (3 runs)
+[stan]
+
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
+
+Benchmark results
+  Running time: 43.88816666666667 +/- 0.5039800227522238 (3 runs)
+
