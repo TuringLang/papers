@@ -1,11 +1,11 @@
 results_fn = "results"
 
 models = [
-    "high-dim-gauss",
-    "gauss-unknown",
+    "high_dim_gauss",
+    "gauss_unknown",
     "h_poisson",
-    "naive-bayes",
-    "logistic-reg",
+    "naive_bayes",
+    "logistic_reg",
     "sto_volatility",
 ]
 
