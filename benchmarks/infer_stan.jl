@@ -14,18 +14,31 @@ model = Stanmodel(
 
 if "--benchmark" in ARGS
     using Statistics: mean, std
+    clog = "MODEL_NAME" in keys(ENV)
+    if clog
+        using PyCall: pyimport
+        wandb = pyimport("wandb")
+        wandb.init(project="turing-benchmark")
+        wandb.config.update(Dict("ppl" => "stan", "model" => ENV["MODEL_NAME"]))
+    end
     n_runs = 3
     times = []
     for i in 1:n_runs
         status, chain = stan(model, data, summary=false)
+        # Parse inference time from log
         tl = read(pipeline(`tail tmp/noname_run.log`, `rg "s \(S"`), String)
         t = parse(Float64, match(r"[0-9]+.[0-9]+", tl).match)
+        clog && wandb.log(Dict("time" => t))
         push!(times, t)
     end
     t_mean = mean(times)
     t_std = std(times)
     println("Benchmark results")
     println("  Running time: $t_mean +/- $t_std ($n_runs runs)")
+    if clog
+        wandb.run.summary["time_mean"] = t_mean
+        wandb.run.summary["time_std"] = t_std
+    end
 else
     @time status, chain = stan(model, data, summary=false)
 end

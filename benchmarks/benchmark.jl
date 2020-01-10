@@ -41,7 +41,14 @@ open("$results_fn.txt", "w") do io
         for ppl in ppls
             write(io, "[$ppl]\n")
             @info "Benchmarking $model using $ppl ..."
-            res = read(`julia $model/$ppl.jl --benchmark`, String)
+            cmd = `julia $model/$ppl.jl --benchmark`
+            if "WANDB" in keys(ENV) && ENV["WANDB"] == "1"
+                withenv("MODEL_NAME" => model) do
+                    res = read(cmd, String)
+                end
+            else
+                res = read(cmd, String)
+            end
             write(io, res)
         end
         write(io, "\n")
