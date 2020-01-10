@@ -2,3 +2,13 @@
 hmm_semisup
 ---
 [turing]
+Benchmark results
+  Compilation time: 16.16553119000008 (approximately)
+  Running time: 463.21294081799994 +/- 26.044647410932335 (3 runs)
+[stan]
+
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
+
+Benchmark results
+  Running time: 5.033236666666667 +/- 0.05811060258965908 (3 runs)
+
