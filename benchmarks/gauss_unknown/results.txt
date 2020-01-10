@@ -1,5 +1,5 @@
 ---
-Benchmarking gauss-unknown
+gauss_unknown
 ---
 [turing]
 Benchmark results

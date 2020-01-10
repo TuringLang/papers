@@ -3,12 +3,13 @@ results_fn = "results"
 models = [
     "high-dim-gauss",
     "gauss-unknown",
+    "h_poisson",
     "naive-bayes",
     "logistic-reg",
 ]
 
 for m in models
-    if "--$(m)_only" in ARGS
+    if "--$(m)-only" in ARGS
         global models, results_fn
         models = [m]
         results_fn = "$m/$results_fn"
@@ -22,10 +23,10 @@ ppls = [
 ]
 
 for p in ppls
-    if "--$(p)_only" in ARGS
+    if "--$(p)-only" in ARGS
         global ppls, results_fn
         ppls = [p]
-        results_fn *= "_$(p)"
+        results_fn *= "-$(p)"
         break
     end
 end
@@ -35,10 +36,11 @@ end
 open("$results_fn.txt", "w") do io
     for model in models
         write(io, "---\n")
-        write(io, "Benchmarking $model\n")
+        write(io, "$model\n")
         write(io, "---\n")
         for ppl in ppls
             write(io, "[$ppl]\n")
+            @info "Benchmarking $model using $ppl ..."
             res = read(`julia $model/$ppl.jl --benchmark`, String)
             write(io, res)
         end

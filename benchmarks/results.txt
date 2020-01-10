@@ -1,5 +1,5 @@
 ---
-Benchmarking high-dim-gauss
+high_dim_gauss
 ---
 [turing]
 Benchmark results
@@ -13,7 +13,7 @@ Benchmark results
   Running time: 11.993233333333334 +/- 0.1848190015483614 (3 runs)
 
 ---
-Benchmarking naive-bayes
+naive_bayes
 ---
 [turing]
 Benchmark results
@@ -27,7 +27,7 @@ Benchmark results
   Running time: 14.492266666666668 +/- 0.6383043892480559 (3 runs)
 
 ---
-Benchmarking logistic-reg
+logistic_reg
 ---
 [turing]
 Benchmark results
