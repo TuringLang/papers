@@ -1,4 +1,0 @@
----
-high_dim_gauss
----
-[turing]
