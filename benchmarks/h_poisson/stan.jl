@@ -22,13 +22,13 @@ parameters {
   real<lower=0> a0_sig;
 }
 model {
-  vector[N] mu;
+  vector[N] alpha;
   a0 ~ normal(0, 10);
   a1 ~ normal(0, 1);
   a0_sig ~ cauchy(0, 1);
   a0s ~ normal(0, a0_sig);
-  for(i in 1:N) mu[i] = exp(a0 + a0s[idx[i]] + a1 * x[i]);
-  y ~ poisson(mu);
+  for(i in 1:N) alpha[i] = a0 + a0s[idx[i]] + a1 * x[i];
+  y ~ poisson_log(alpha);
 }
 "
 

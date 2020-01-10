@@ -3,12 +3,12 @@ h_poisson
 ---
 [turing]
 Benchmark results
-  Compilation time: 14.772075178 (approximately)
-  Running time: 1.5248642309999998 +/- 0.04274046612383523 (3 runs)
+  Compilation time: 11.314691685000001 (approximately)
+  Running time: 0.34951028600000006 +/- 0.008099369945878088 (3 runs)
 [stan]
 
 File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
 
 Benchmark results
-  Running time: 0.12034566666666664 +/- 0.05426535931267141 (3 runs)
+  Running time: 0.08784366666666667 +/- 0.05247943689039864 (3 runs)
 

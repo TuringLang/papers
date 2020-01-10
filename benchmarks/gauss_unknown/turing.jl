@@ -7,6 +7,8 @@ data = get_data()
 
 using Turing
 
+Turing.setadbackend(:forward_diff)
+
 @model gauss_unknown(y) = begin
     N = length(y)
     m ~ Normal(0, 1)
