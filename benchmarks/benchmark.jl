@@ -6,6 +6,7 @@ models = [
     "h_poisson",
     "naive-bayes",
     "logistic-reg",
+    "sto_volatility",
 ]
 
 for m in models

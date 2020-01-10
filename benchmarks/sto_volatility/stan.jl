@@ -5,7 +5,7 @@ seed!(1)
 
 include("data.jl")
 
-data = get_data()
+data = get_data(500)
 
 using CmdStan
 
@@ -27,15 +27,14 @@ model {
   h[1] ~ normal(mu, sigma / sqrt(1 - phi * phi));
   for (t in 2:T)
     h[t] ~ normal(mu + phi * (h[t - 1] -  mu), sigma);
-  for (t in 1:T)
-    y[t] ~ normal(0, exp(h[t] / 2));
+  y ~ normal(0, exp(h / 2));
 }
 "
 
 alg = CmdStan.Hmc(
-    CmdStan.Static(0.004),
+    CmdStan.Static(0.0004),
     CmdStan.diag_e(),
-    0.001,
+    0.0002,
     0.0,
 )
 

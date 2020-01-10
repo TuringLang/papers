@@ -3,14 +3,14 @@ seed!(1)
 
 include("data.jl")
 
-data = get_data()
+data = get_data(500)
 
 using Turing
 
 Turing.setadbackend(:reverse_diff)
 
 @model sto_volatility(y, ::Type{Tv}=Vector{Float64}) where {Tv} = begin
-    T = size(y, 1)
+    T = length(y)
     
     ϕ ~ Uniform(-1, 1)
     σ ~ truncated(Cauchy(0, 5), 0, Inf)
@@ -27,7 +27,7 @@ end
 
 model = sto_volatility(data["y"])
 
-alg = HMC(0.001, 4)
+alg = HMC(0.0002, 4)
 
 include("../infer_turing.jl")
 
