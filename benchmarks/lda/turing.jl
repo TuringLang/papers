@@ -9,8 +9,6 @@ using Turing
 
 Turing.setadbackend(:reverse_diff)
 
-using StatsFuns: logsumexp
-
 @model lda(K, V, M, N, w, doc, alpha, beta, ::Type{T}=Float64) where {T} = begin
     theta = Matrix{T}(undef, K, M)
     for m in 1:M
