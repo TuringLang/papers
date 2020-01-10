@@ -1,0 +1,13 @@
+---
+gauss_unknown
+---
+[turing]
+Benchmark results
+  Compilation time: 8.816682936333333 (approximately)
+  Running time: 2.1519442586666666 +/- 0.010882112017354246 (3 runs)
+[stan]
+
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
+
+Benchmark results
+  Running time: 0.349359 +/- 0.0017272949950717805 (3 runs)
