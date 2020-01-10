@@ -3,39 +3,82 @@ high_dim_gauss
 ---
 [turing]
 Benchmark results
-  Compilation time: 10.704971830999998 (approximately)
-  Running time: 8.232920991 +/- 0.14421749537806824 (3 runs)
+  Compilation time: 10.505497413333334 (approximately)
+  Running time: 7.167126350666667 +/- 0.261385764515706 (3 runs)
 [stan]
 
-File /Users/kai/projects/TuringLang/TuringExamples/aistats-2018/tmp/noname.stan will be updated.
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
 
 Benchmark results
-  Running time: 11.993233333333334 +/- 0.1848190015483614 (3 runs)
+  Running time: 11.450633333333334 +/- 0.3307209448059393 (3 runs)
+
+---
+gauss_unknown
+---
+[turing]
+Benchmark results
+  Compilation time: 9.783526394666668 (approximately)
+  Running time: 2.169676410333333 +/- 0.12594649666060723 (3 runs)
+[stan]
+
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
+
+Benchmark results
+  Running time: 0.347042 +/- 0.018850453893739513 (3 runs)
+
+---
+h_poisson
+---
+[turing]
+Benchmark results
+  Compilation time: 12.296842065 (approximately)
+  Running time: 0.347423769 +/- 0.0034656970386329243 (3 runs)
+[stan]
+
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
+
+Benchmark results
+  Running time: 0.16053266666666666 +/- 0.0033894371705835333 (3 runs)
 
 ---
 naive_bayes
 ---
 [turing]
 Benchmark results
-  Compilation time: 11.287464384 (approximately)
-  Running time: 7.616931909000001 +/- 0.06308603179969116 (3 runs)
+  Compilation time: 10.235901105333333 (approximately)
+  Running time: 6.513399243666666 +/- 0.13957800180900484 (3 runs)
 [stan]
 
-File /Users/kai/projects/TuringLang/TuringExamples/aistats-2018/tmp/noname.stan will be updated.
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
 
 Benchmark results
-  Running time: 14.492266666666668 +/- 0.6383043892480559 (3 runs)
+  Running time: 13.190333333333333 +/- 0.11011495508482659 (3 runs)
 
 ---
 logistic_reg
 ---
 [turing]
 Benchmark results
-  Compilation time: 11.417524385666667 (approximately)
-  Running time: 4.225121738333333 +/- 1.3928859109776388 (3 runs)
+  Compilation time: 10.599305127666666 (approximately)
+  Running time: 3.6621548723333333 +/- 1.1228739890543458 (3 runs)
 [stan]
 
-File /Users/kai/projects/TuringLang/TuringExamples/aistats-2018/tmp/noname.stan will be updated.
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
 
 Benchmark results
-  Running time: 61.90966666666667 +/- 0.09382373544755875 (3 runs)
+  Running time: 58.168933333333335 +/- 0.6683739547089875 (3 runs)
+
+---
+sto_volatility
+---
+[turing]
+Benchmark results
+  Compilation time: 56.745128407333326 (approximately)
+  Running time: 76.13111473666667 +/- 31.518844335875574 (3 runs)
+[stan]
+
+File /Users/kai/projects/TuringLang/TuringExamples/benchmarks/tmp/noname.stan will be updated.
+
+Benchmark results
+  Running time: 0.7115780000000002 +/- 0.013371247810133519 (3 runs)
+

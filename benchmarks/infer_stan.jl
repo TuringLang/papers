@@ -36,8 +36,8 @@ if "--benchmark" in ARGS
     println("Benchmark results")
     println("  Running time: $t_mean +/- $t_std ($n_runs runs)")
     if clog
-        wandb.run.summary["time_mean"] = t_mean
-        wandb.run.summary["time_std"] = t_std
+        wandb.run.summary.time_mean = t_mean
+        wandb.run.summary.time_std  = t_std
     end
 else
     @time status, chain = stan(model, data, summary=false)

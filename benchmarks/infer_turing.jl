@@ -29,8 +29,8 @@ if "--benchmark" in ARGS
     println("  Compilation time: $t_compilation_approx (approximately)")
     println("  Running time: $t_mean +/- $t_std ($n_runs runs)")
     if clog
-        wandb.run.summary["time_mean"] = t_mean
-        wandb.run.summary["time_std"] = t_std
+        wandb.run.summary.time_mean = t_mean
+        wandb.run.summary.time_std  = t_std
     end
 else
     @time chain = sample(model, alg, n_samples; progress_style=:plain)
