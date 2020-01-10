@@ -10,7 +10,6 @@ data = get_data()
 using CmdStan
 
 const model_str = "
-  
 data {
   int<lower=1> K;  // num categories
   int<lower=1> V;  // num words

@@ -12,17 +12,15 @@ Turing.setadbackend(:reverse_diff)
 using StatsFuns: logsumexp
 
 # FIXME: tag1 + tag2 + tag3 lead to AD error
-@model hmm_semisup(w, z, u, alpha, beta, ::Type{R}=Float64) where {R} = begin
-    K, V, T, T_unsup = length.((alpha, beta, w, u))
-
-    theta = Vector{Vector{R}}(undef, K)
+@model hmm_semisup(K, V, T, T_unsup, w, z, u, alpha, beta, ::Type{Tv}=Vector{Float64}) where {Tv} = begin
+    theta = Vector{Tv}(undef, K)
     for k = 1:K
-      theta[k] ~ Dirichlet(alpha)
+        theta[k] ~ Dirichlet(alpha)
     end
     # theta ~ Multi(Dirichlet(alpha), K)  # tag1
-    phi = Vector{Vector{R}}(undef, K)
+    phi = Vector{Tv}(undef, K)
     for k = 1:K
-      phi[k] ~ Dirichlet(beta)
+        phi[k] ~ Dirichlet(beta)
     end
   
     w ~ ArrayDist(Categorical.(phi[z]))
@@ -30,22 +28,24 @@ using StatsFuns: logsumexp
     # z[2:end] ~ ArrayDist(Categorical.(theta[:,zi] for zi in z[1:end-1]))    # tag2
 
     # Forward algorithm
-    acc = Vector{R}(undef, K)
-    gamma = Matrix{R}(undef, T_unsup, K)
-    for k = 1:K
-      gamma[1,k] = log(phi[k][u[1]])
+    acc, gamma, gamma′ = Tv(undef, K), Tv(undef, K), Tv(undef, K)
+    for k in 1:K
+        gamma[k] = log(phi[k][u[1]])
     end
-    for t = 2:T_unsup, k = 1:K
-        for j = 1:K
-          acc[j] = gamma[t-1,j] + log(theta[j][k]) + log(phi[k][u[t]])
-        #   acc[j] = gamma[t-1,j] + log(theta[k,j]) + log(phi[k][u[t]])   # tag3
+    for t in 2:T_unsup
+        for k in 1:K
+            for j in 1:K
+              acc[j] = gamma[j] + log(theta[j][k]) + log(phi[k][u[t]])
+            #   acc[j] = gamma[j] + log(theta[k,j]) + log(phi[k][u[t]])   # tag3
+            end
+            gamma′[k] = logsumexp(acc)
         end
-        gamma[t,k] = logsumexp(acc)
+        gamma .= gamma′
     end
-    @logpdf() += logsumexp(gamma[T_unsup,:])
+    @logpdf() += logsumexp(gamma)
 end
 
-model = hmm_semisup(data["w"], data["z"], data["u"], data["alpha"], data["beta"])
+model = hmm_semisup(data["K"], data["V"], data["T"], data["T_unsup"], data["w"], data["z"], data["u"], data["alpha"], data["beta"])
 
 alg = HMC(0.001, 4)
 

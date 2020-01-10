@@ -1,4 +1,4 @@
 ---
-high_dim_gauss
+hmm_semisup
 ---
 [turing]

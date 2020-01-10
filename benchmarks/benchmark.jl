@@ -4,6 +4,7 @@ models = [
     "high_dim_gauss",
     "gauss_unknown",
     "h_poisson",
+    "hmm_semisup",
     "naive_bayes",
     "logistic_reg",
     "sto_volatility",
