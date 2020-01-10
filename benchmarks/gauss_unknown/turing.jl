@@ -18,7 +18,8 @@ end
 
 model = gauss_unknown(data["y"])
 
-alg = HMC(0.01, 4)
+step_size = 0.01
+n_steps = 4
 
 include("../infer_turing.jl")
 

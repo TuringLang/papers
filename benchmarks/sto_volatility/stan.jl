@@ -31,12 +31,8 @@ model {
 }
 "
 
-alg = CmdStan.Hmc(
-    CmdStan.Static(0.0004),
-    CmdStan.diag_e(),
-    0.0002,
-    0.0,
-)
+step_size = 0.0002
+n_steps = 4
 
 include("../infer_stan.jl")
 

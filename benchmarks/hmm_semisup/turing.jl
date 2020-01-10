@@ -47,7 +47,8 @@ end
 
 model = hmm_semisup(data["K"], data["V"], data["T"], data["T_unsup"], data["w"], data["z"], data["u"], data["alpha"], data["beta"])
 
-alg = HMC(0.001, 4)
+step_size = 0.001
+n_steps = 4
 
 include("../infer_turing.jl")
 

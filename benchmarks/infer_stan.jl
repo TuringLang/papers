@@ -1,3 +1,10 @@
+alg = CmdStan.Hmc(
+    CmdStan.Static(n_steps * step_size),
+    CmdStan.diag_e(),
+    step_size,
+    0.0,
+)
+
 model = Stanmodel(
     model=model_str, 
     nchains=1,

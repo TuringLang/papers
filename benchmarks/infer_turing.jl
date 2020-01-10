@@ -1,3 +1,5 @@
+alg = HMC(step_size, n_steps)
+
 n_samples = 2_000
 
 chain = nothing

@@ -27,7 +27,8 @@ end
 
 model = sto_volatility(data["y"])
 
-alg = HMC(0.0002, 4)
+step_size = 0.0002
+n_steps = 4
 
 include("../infer_turing.jl")
 

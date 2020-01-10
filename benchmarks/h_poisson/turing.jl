@@ -31,7 +31,8 @@ end
 
 model = h_poisson(data["y"], data["x"], data["idx"], data["N"], data["Ns"])
 
-alg = HMC(0.01, 4)
+step_size = 0.01
+n_steps = 4
 
 include("../infer_turing.jl")
 

@@ -18,7 +18,8 @@ end
 
 model = logistic_reg(data["X"], data["y"])
 
-alg = HMC(0.1, 4)
+step_size = 0.1
+n_steps = 4
 
 include("../infer_turing.jl")
 

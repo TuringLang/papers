@@ -8,6 +8,7 @@ models = [
     "naive_bayes",
     "logistic_reg",
     "sto_volatility",
+    # "lda",
 ]
 
 for m in models
