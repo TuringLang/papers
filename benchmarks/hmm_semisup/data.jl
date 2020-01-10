@@ -1,6 +1,6 @@
 using Distributions
 
-function get_data(k=5, v=50, t=100, t_unsup=900)
+function get_data(k=5, v=20, t=100, t_unsup=200)
     # Hyper parameters
     alpha = fill(1, k)
     beta = fill(0.1, v)
