@@ -10,11 +10,13 @@ using Turing
 Turing.setadbackend(:reverse_diff)
 
 @model naive_bayes(image, label, D, N, C, ::Type{T}=Float64) where {T<:Real} = begin
-    m ~ Multi(Normal(0.0, 10.0), D, C)
+    m ~ Multi(Normal(0, 10), D, C)
     image ~ ArrayDist(Normal.(m[:,label], 1))
 end 
 
 model = naive_bayes(data["image"], data["label"], data["D"], data["N"], data["C"])
+
+alg = HMC(0.1, 4)
 
 include("../infer_turing.jl")
 

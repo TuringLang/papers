@@ -9,21 +9,24 @@ using CmdStan
 
 const model_str = "
 data {
-  int D;
+  int<lower=0> N;
+  vector[N] y;
 }
 parameters {
-  real m[D];
+  real m;
+  real<lower=0> s;
 }
 model {
-  for (d in 1:D)
-    m[d] ~ normal(0, 1);
+  m ~ normal(0, 1);
+  s ~ cauchy(0, 5);
+  y ~ normal(m, s);
 }
 "
 
 alg = CmdStan.Hmc(
-    CmdStan.Static(0.4),
+    CmdStan.Static(0.04),
     CmdStan.diag_e(),
-    0.1,
+    0.01,
     0.0,
 )
 

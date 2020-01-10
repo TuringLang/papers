@@ -1,4 +1,3 @@
-alg = HMC(0.1, 4)
 n_samples = 2_000
 
 chain = nothing
