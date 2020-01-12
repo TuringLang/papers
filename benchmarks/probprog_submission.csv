@@ -1,0 +1,17 @@
+Name,ppl,model,time_std,time_mean
+celestial-energy-46,stan,lda,0.5039800227522238,43.88816666666667
+resilient-bird-45,turing,lda,7.909938774234817,378.761714601
+gallant-river-44,stan,sto_volatility,0.014350435115354504,0.918003
+youthful-grass-43,stan,hmm_semisup,0.05811060258965908,5.033236666666667
+earnest-dawn-42,turing,hmm_semisup,26.044647410932335,463.21294081799994
+curious-surf-39,turing,sto_volatility,30.578969778291953,75.026135433
+pious-deluge-38,stan,logistic_reg,2.273743438326613,56.15036666666666
+brisk-totem-37,turing,logistic_reg,1.3307076036097722,3.941581426
+dry-bird-36,stan,naive_bayes,0.14249036224718234,13.677266666666666
+lilac-pyramid-35,turing,naive_bayes,0.14433950672588655,6.8484756503333335
+laced-morning-34,stan,h_poisson,0.06807910113977711,0.134482
+absurd-grass-33,turing,h_poisson,0.01326488901201825,0.32486384333333335
+colorful-deluge-32,stan,gauss_unknown,0.01481764496582818,0.34249333333333337
+devout-deluge-31,turing,gauss_unknown,0.06147874178072369,2.210986531666667
+summer-sound-30,stan,high_dim_gauss,0.3055549705044906,11.609
+driven-firefly-29,turing,high_dim_gauss,0.22158755377592457,9.765776499
