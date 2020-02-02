@@ -30,19 +30,19 @@ end
     N = length(y)
     rpm = DirichletProcess(alpha)
 
-    v ~ Multi(StickBreakingProcess(rpm), K)
+    # stick-breaking
+    v ~ Multi(Beta(one(rpm.α), rpm.α), K)
+    #v ~ Multi(StickBreakingProcess(rpm), K)
+
     m ~ MvNormal(ones(K)*m0, s0)
     w = vcat(v[1], v[2:end] .* cumprod(1 .- v[1:end-1]))
-
-    # This breaks for some reason...
-    # println(v)
 
     y ~ Multi(IMM(w, m), N)
 end
 
-model = truncated_imm(data["y"], 10, 1.0)
+model = truncated_imm(data["y"], 100, 1.0)
 
-step_size = 0.0001
+step_size = 0.01
 n_steps = 4
 
 include("../infer_turing.jl")

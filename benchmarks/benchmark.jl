@@ -9,6 +9,7 @@ models = [
     "logistic_reg",
     "sto_volatility",
     "lda",
+    "truncated_imm"
 ]
 
 for m in models
