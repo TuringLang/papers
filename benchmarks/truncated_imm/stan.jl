@@ -10,9 +10,9 @@ using CmdStan
 # See:
 # https://ecosang.github.io/blog/study/dirichlet-process-with-stan/
 
-data["C"] = 100
+data["C"] = 20
 
-stan_model = "
+const model_str = "
 data{
   int<lower=0> C;//num of cludter
   int<lower=0> N;//data num
