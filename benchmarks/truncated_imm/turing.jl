@@ -40,7 +40,9 @@ end
     y ~ Multi(IMM(w, m), N)
 end
 
-model = truncated_imm(data["y"], 100, 1.0)
+C = 20
+
+model = truncated_imm(data["y"], C, 1.0)
 
 step_size = 0.01
 n_steps = 4
