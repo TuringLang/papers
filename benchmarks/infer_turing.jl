@@ -1,4 +1,10 @@
-alg = HMC(step_size, n_steps)
+if !(@isdefined alg)
+    alg = nothing
+end
+
+if isnothing(alg)
+    alg = HMC(step_size, n_steps)
+end
 
 n_samples = 2_000
 
@@ -39,3 +45,5 @@ if "--benchmark" in ARGS
 else
     @time chain = sample(model, alg, n_samples; progress_style=:plain)
 end
+
+alg = nothing
