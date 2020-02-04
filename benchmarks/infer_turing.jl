@@ -4,6 +4,13 @@ n_samples = 2_000
 
 chain = nothing
 
+using BenchmarkTools
+
+varinfo = Turing.VarInfo(model)
+spl = Turing.SampleFromPrior()
+Turing.Core.link!(varinfo, spl)
+forward_model() = model(varinfo, spl)
+
 if "--benchmark" in ARGS
     using Logging: with_logger, NullLogger
     using Statistics: mean, std
@@ -32,10 +39,15 @@ if "--benchmark" in ARGS
     println("Benchmark results")
     println("  Compilation time: $t_compilation_approx (approximately)")
     println("  Running time: $t_mean +/- $t_std ($n_runs runs)")
+    t_forward = @belapsed forward_model()
+    println("  Forward time: $t_forward")
     if clog
-        wandb.run.summary.time_mean = t_mean
-        wandb.run.summary.time_std  = t_std
+        wandb.run.summary.time_mean    = t_mean
+        wandb.run.summary.time_std     = t_std
+        wandb.run.summary.time_forward = t_forward
     end
+elseif "--forward_only" in ARGS
+    @btime forward_model()
 else
     @time chain = sample(model, alg, n_samples; progress_style=:plain)
 end

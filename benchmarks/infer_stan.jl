@@ -19,6 +19,15 @@ model = Stanmodel(
     output_format=:array
 )
 
+using BenchmarkTools
+
+using PyCall
+pystan = pyimport("pystan")
+sm = pystan.StanModel(model_code=model_str)
+fit = sm.sampling(data=data, iter=100, chains=1)
+theta = fit.unconstrain_pars(fit.get_last_position()[1])
+forward_model() = fit.log_prob(theta)
+
 if "--benchmark" in ARGS
     using Statistics: mean, std
     clog = "MODEL_NAME" in keys(ENV)    # cloud logging flag
@@ -43,10 +52,15 @@ if "--benchmark" in ARGS
     t_std = std(times)
     println("Benchmark results")
     println("  Running time: $t_mean +/- $t_std ($n_runs runs)")
+    t_forward = @belapsed forward_model()
+    println("  Forward time: $t_forward")
     if clog
-        wandb.run.summary.time_mean = t_mean
-        wandb.run.summary.time_std  = t_std
+        wandb.run.summary.time_mean    = t_mean
+        wandb.run.summary.time_std     = t_std
+        wandb.run.summary.time_forward = t_forward
     end
+elseif "--forward_only" in ARGS
+    @btime forward_model()
 else
     @time status, chain = stan(model, data, summary=false)
 end
