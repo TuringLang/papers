@@ -7,8 +7,6 @@ data = get_data()
 
 using Turing
 
-Turing.setadbackend(:reverse_diff)
-
 @model naive_bayes(image, label, D, N, C, ::Type{T}=Float64) where {T<:Real} = begin
     m ~ Multi(Normal(0, 10), D, C)
     image ~ ArrayDist(Normal.(m[:,label], 1))

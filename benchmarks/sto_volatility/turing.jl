@@ -7,8 +7,6 @@ data = get_data(500)
 
 using Turing
 
-Turing.setadbackend(:reverse_diff)
-
 @model sto_volatility(y, ::Type{Tv}=Vector{Float64}) where {Tv} = begin
     T = length(y)
     

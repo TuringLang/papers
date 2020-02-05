@@ -7,8 +7,6 @@ data = get_data()
 
 using Turing
 
-Turing.setadbackend(:reverse_diff)
-
 @model logistic_reg(X, y) = begin
     D, N = size(X)
     w ~ Multi(Normal(0, 1), D)

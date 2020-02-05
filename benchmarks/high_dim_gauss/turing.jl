@@ -7,8 +7,6 @@ data = get_data()
 
 using Turing
 
-Turing.setadbackend(:reverse_diff)
-
 @model high_dim_gauss(D) = begin
     m ~ Multi(Normal(0, 1), D)
 end

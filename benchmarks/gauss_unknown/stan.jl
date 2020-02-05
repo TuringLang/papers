@@ -5,8 +5,6 @@ include("data.jl")
 
 data = get_data()
 
-using CmdStan
-
 const model_str = "
 data {
   int<lower=0> N;

@@ -7,8 +7,6 @@ data = get_data()
 
 using Turing
 
-Turing.setadbackend(:reverse_diff)
-
 using StatsFuns: logsumexp
 
 # FIXME: tag1 + tag2 + tag3 lead to AD error

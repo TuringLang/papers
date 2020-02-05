@@ -7,8 +7,6 @@ data = get_data()
 
 using Turing
 
-Turing.setadbackend(:forward_diff)
-
 import Distributions: logpdf, DiscreteUnivariateDistribution
 using SpecialFunctions: loggamma
 
