@@ -3,7 +3,7 @@ seed!(1)
 
 include("data.jl")
 
-data = get_data()
+data = get_stan_data()
 
 using CmdStan
 
@@ -12,20 +12,20 @@ data {
   int C;
   int D;
   int N;
-  matrix[D,N] image;
+  matrix[N, D] image;
   int<lower=1,upper=C> label[N];
 }
 parameters {
-  matrix[D,C] m;
+  matrix[C, D] m;
 }
 model {
-  for (c in 1:C)
-    for (d in 1:D)
-        m[d,c] ~ normal(0, 10);
-      
-  for (n in 1:N)
-    for (d in 1:D)
-        image[d,n] ~ normal(m[d,label[n]], 1);
+  for (d in 1:D) {
+    target+= normal_lpdf(m[, d] | 0, 10);
+  }
+
+  for (d in 1:D) {
+    target += normal_lpdf(image[, d] | m[label, d], 1);
+  }
 }
 "
 

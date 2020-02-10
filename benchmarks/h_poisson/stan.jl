@@ -13,12 +13,12 @@ data {
   int y[N];
   int Ns;
   int idx[N];
-  real x[N];
+  matrix[1, N] x;
 }
 parameters {
   real a0;
   vector[Ns] a0s;
-  real a1;
+  vector[1] a1;
   real<lower=0> a0_sig;
 }
 model {
@@ -27,8 +27,8 @@ model {
   a1 ~ normal(0, 1);
   a0_sig ~ cauchy(0, 1);
   a0s ~ normal(0, a0_sig);
-  for(i in 1:N) alpha[i] = a0 + a0s[idx[i]] + a1 * x[i];
   y ~ poisson_log(alpha);
+  target += poisson_log_glm_lpmf(y | x, a0 + a0s[idx], a1);
 }
 "
 

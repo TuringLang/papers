@@ -12,11 +12,10 @@ data {
   int D;
 }
 parameters {
-  real m[D];
+  vector[D] m;
 }
 model {
-  for (d in 1:D)
-    m[d] ~ normal(0, 1);
+  m ~ normal(0, 1);
 }
 "
 

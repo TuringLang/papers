@@ -14,20 +14,12 @@ data {
   matrix[D,N] X;
   int<lower=0,upper=1> y[N];
 }
-transformed data {
-  matrix[N,D] XT;
-  XT = X';
-}
 parameters {
   vector[D] w;
 }
-transformed parameters {
-  vector[N] p;
-  p = inv_logit(XT * w);
-}
 model {
-  w ~ normal(0, 1);
-  y ~ bernoulli(p);
+  target += normal_lpdf(w | 0, 1);
+  target += bernoulli_logit_glm_lpmf(y | X, 1.0, w);
 }
 "
 

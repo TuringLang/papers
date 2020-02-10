@@ -32,8 +32,8 @@ model {
   for (n in 1:N) {
     real gamma[K];
     for (k in 1:K)
-      gamma[k] <- log(theta[doc[n],k]) + log(phi[k,w[n]]);
-    increment_log_prob(log_sum_exp(gamma));  // likelihood
+      gamma[k] = log(theta[doc[n],k]) + log(phi[k,w[n]]);
+    target += log_sum_exp(gamma);  // likelihood
   }
 }
 "

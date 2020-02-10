@@ -12,7 +12,7 @@ Turing.setadbackend(:forward_diff)
 @model gauss_unknown(y) = begin
     N = length(y)
     m ~ Normal(0, 1)
-    s ~ truncated(Cauchy(0, 5), 0, Inf)
+    s ~ truncated(normal(0, 2), 0, Inf)
     y ~ Multi(Normal(m, s), N)
 end
 

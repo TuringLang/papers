@@ -18,7 +18,7 @@ parameters {
 }
 model {
   m ~ normal(0, 1);
-  s ~ cauchy(0, 5);
+  s ~ normal(0, 2);
   y ~ normal(m, s);
 }
 "
