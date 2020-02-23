@@ -27,8 +27,7 @@ model {
   a1 ~ normal(0, 1);
   a0_sig ~ cauchy(0, 1);
   a0s ~ normal(0, a0_sig);
-  y ~ poisson_log(alpha);
-  target += poisson_log_glm_lpmf(y | x, a0 + a0s[idx], a1);
+  y ~ poisson_log_glm_lpmf(x, a0 + a0s[idx], a1);
 }
 "
 

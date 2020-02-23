@@ -3,7 +3,7 @@ seed!(1)
 
 include("data.jl")
 
-data = get_stan_data()
+data = get_data (; is_columnmajor=false)
 
 using CmdStan
 
@@ -20,11 +20,11 @@ parameters {
 }
 model {
   for (d in 1:D) {
-    target+= normal_lpdf(m[, d] | 0, 10);
+    m[, d] ~ normal(0, 10);
   }
 
   for (d in 1:D) {
-    target += normal_lpdf(image[, d] | m[label, d], 1);
+    image[, d] ~ normal(m[label, d], 1);
   }
 }
 "

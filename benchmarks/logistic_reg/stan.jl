@@ -18,8 +18,8 @@ parameters {
   vector[D] w;
 }
 model {
-  target += normal_lpdf(w | 0, 1);
-  target += bernoulli_logit_glm_lpmf(y | X, 1.0, w);
+  w ~ normal(0, 1);
+  y ~ bernoulli_logit_glm(X, 1.0, w);
 }
 "
 

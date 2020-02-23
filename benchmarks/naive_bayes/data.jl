@@ -22,14 +22,6 @@ get_data(n=1_000) = Dict(
     "C" => 10,
     "D" => D_pca,
     "N" => n,
-    "image" => image[:,1:n],
-    "label" => label[1:n]
-)
-
-get_stan_data(n=1_000) = Dict(
-    "C" => 10,
-    "D" => D_pca,
-    "N" => n,
-    "image" => transpose(image[:,1:n]), 
+    "image" => is_columnmajor ? image[:,1:n] : transpose(image[:,1:n]),
     "label" => label[1:n]
 )

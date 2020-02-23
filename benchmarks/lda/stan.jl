@@ -30,10 +30,7 @@ model {
   for (k in 1:K)
     phi[k] ~ dirichlet(beta);     // prior
   for (n in 1:N) {
-    real gamma[K];
-    for (k in 1:K)
-      gamma[k] = log(theta[doc[n],k]) + log(phi[k,w[n]]);
-    target += log_sum_exp(gamma);  // likelihood
+    target += log_sum_exp(log(theta[doc[n],]) + to_vector(log(phi[,w[n]])));  // likelihood
   }
 }
 "
