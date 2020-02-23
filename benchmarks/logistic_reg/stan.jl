@@ -11,7 +11,7 @@ const model_str = "
 data {
   int D;
   int N;
-  matrix[D,N] X;
+  matrix[N, D] X;
   int<lower=0,upper=1> y[N];
 }
 parameters {
