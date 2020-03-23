@@ -6,12 +6,13 @@ include("data.jl")
 data = get_data()
 
 using Turing
+using Turing.Core: filldist 
 
 @model gauss_unknown(y) = begin
     N = length(y)
     m ~ Normal(0, 1)
     s ~ truncated(Cauchy(0, 5), 0, Inf)
-    y ~ Multi(Normal(m, s), N)
+    y ~ filldist(Normal(m, s), N)
 end
 
 model = gauss_unknown(data["y"])

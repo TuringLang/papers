@@ -1,4 +1,4 @@
-Turing.setadbackend(:reverse_diff)
+Turing.setadbackend(:tracker)
 
 alg = HMC(step_size, n_steps)
 
