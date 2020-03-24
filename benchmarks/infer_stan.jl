@@ -75,7 +75,7 @@ if "--benchmark" in ARGS
         wandb.run.summary.time_forward  = t_forward
         wandb.run.summary.time_gradient = t_gradient
     end
-elseif "--functions" in ARGS
+elseif "--function" in ARGS
     @btime $forward_model($theta)
     @btime $gradient($theta)
 else
