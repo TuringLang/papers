@@ -22,8 +22,9 @@ parameters {
   vector[T] h_std;             // std log volatility at time t
 }
 transformed parameters {
-  vector[T] h = h_std * sigma;  // now h ~ normal(0, sigma)
-  h[1] /= sqrt(1 - phi * phi);  // rescale h[1]
+  vector[T] h;                 // log volatility at time t
+  h = h_std * sigma;           // now h ~ normal(0, sigma)
+  h[1] /= sqrt(1 - phi * phi); // rescale h[1]
   h += mu;
   for (t in 2:T)
     h[t] += phi * (h[t-1] - mu);
@@ -33,7 +34,7 @@ model {
   sigma ~ cauchy(0, 5);
   mu ~ cauchy(0, 10);  
   h_std ~ std_normal();
-  y ~ normal(0, exp(h / 2));
+  y ~ normal(0, exp(h ./ 2));
 }
 "
 
