@@ -92,6 +92,12 @@ git-tree-sha1 = "5b08ed6036d9d3f0ee6369410b830f8873d4024c"
 uuid = "b99e7846-7c00-51b0-8f62-c81ae34c0232"
 version = "0.5.8"
 
+[[CodeTracking]]
+deps = ["InteractiveUtils", "UUIDs"]
+git-tree-sha1 = "0becdab7e6fbbcb7b88d8de5b72e5bb2f28239f3"
+uuid = "da1fd8a2-8d9e-5ec2-8556-3022fb5608a2"
+version = "0.5.8"
+
 [[Combinatorics]]
 deps = ["Polynomials"]
 git-tree-sha1 = "140cc833258df8e5aafabdb068875ac0c256be23"
@@ -216,6 +222,9 @@ git-tree-sha1 = "3d7cb2c4c850439f19c4d6d3fbe1dce6481cddb1"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 version = "1.2.4"
 
+[[FileWatching]]
+uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
+
 [[FillArrays]]
 deps = ["LinearAlgebra", "Random", "SparseArrays"]
 git-tree-sha1 = "85c6b57e2680fa28d5c8adc798967377646fbf66"
@@ -278,6 +287,12 @@ git-tree-sha1 = "b34d7cef7b337321e97d22242c3c2b91f476748e"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.0"
 
+[[JuliaInterpreter]]
+deps = ["CodeTracking", "InteractiveUtils", "Random", "UUIDs"]
+git-tree-sha1 = "2eadbbde5534346cbb837c3a75b377cba477a06d"
+uuid = "aa1ae85d-cabe-5617-a682-6adf51b2e16a"
+version = "0.7.13"
+
 [[LazyArrays]]
 deps = ["ArrayLayouts", "FillArrays", "LinearAlgebra", "MacroTools", "StaticArrays"]
 git-tree-sha1 = "b799f90cd9a1d90a54038f8263e701023bce1af8"
@@ -319,6 +334,12 @@ uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 git-tree-sha1 = "c867b50bfc564f0beded1c566f4fc66cfd8b5418"
 uuid = "e6f89c97-d47a-5376-807f-9c37f3926c36"
 version = "0.4.0"
+
+[[LoweredCodeUtils]]
+deps = ["JuliaInterpreter"]
+git-tree-sha1 = "1c41621653250b2824b6e664ac5bd805558aeff9"
+uuid = "6f1432cf-f94c-5a45-995e-cdbf5db27b0b"
+version = "0.4.3"
 
 [[MCMCChains]]
 deps = ["AbstractMCMC", "AxisArrays", "Distributions", "Formatting", "LinearAlgebra", "Random", "RecipesBase", "Requires", "Serialization", "SpecialFunctions", "Statistics", "StatsBase"]
@@ -410,7 +431,7 @@ uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
 version = "0.3.12"
 
 [[Pkg]]
-deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
+deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Test", "UUIDs"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
 [[Polynomials]]
@@ -476,6 +497,12 @@ deps = ["DiffResults", "DiffRules", "ForwardDiff", "FunctionWrappers", "LinearAl
 git-tree-sha1 = "5f7dafd314ff2ada3076797b1edfb71e52151cb9"
 uuid = "37e2e3b7-166d-5795-8a7a-e32c996b4267"
 version = "1.1.0"
+
+[[Revise]]
+deps = ["CodeTracking", "Distributed", "FileWatching", "JuliaInterpreter", "LibGit2", "LoweredCodeUtils", "OrderedCollections", "Pkg", "REPL", "UUIDs", "Unicode"]
+git-tree-sha1 = "3c04c929f8720c2fabb12534cd102a2356a7705c"
+uuid = "295af30f-e4ad-537b-8983-00126c2a3abe"
+version = "2.5.4"
 
 [[Rmath]]
 deps = ["Random", "Rmath_jll"]
@@ -573,8 +600,8 @@ uuid = "84d833dd-6860-57f9-a1a7-6da5db126cff"
 version = "0.3.8"
 
 [[Turing]]
-deps = ["AbstractMCMC", "AdvancedHMC", "AdvancedMH", "Bijectors", "BinaryProvider", "Distributions", "DistributionsAD", "DocStringExtensions", "DynamicPPL", "EllipticalSliceSampling", "ForwardDiff", "Libtask", "LinearAlgebra", "LogDensityProblems", "MCMCChains", "MacroTools", "Markdown", "Memoization", "PDMats", "ProgressLogging", "Random", "Reexport", "Requires", "SpecialFunctions", "Statistics", "StatsBase", "StatsFuns", "Tracker"]
-git-tree-sha1 = "9278fdce9cc175b4818eca791f69d765461a0a52"
+deps = ["AbstractMCMC", "AdvancedHMC", "AdvancedMH", "Bijectors", "BinaryProvider", "Distributions", "DistributionsAD", "DocStringExtensions", "DynamicPPL", "EllipticalSliceSampling", "ForwardDiff", "Libtask", "LinearAlgebra", "LogDensityProblems", "MCMCChains", "MacroTools", "Markdown", "PDMats", "ProgressLogging", "Random", "Reexport", "Requires", "SpecialFunctions", "Statistics", "StatsBase", "StatsFuns", "Tracker"]
+git-tree-sha1 = "bb96caa09e7151e6ce2750122324b25a194dabac"
 repo-rev = "mt/reversediff"
 repo-url = "https://github.com/TuringLang/Turing.jl.git"
 uuid = "fce5fe82-541a-59a6-adf8-730c64b5f9a0"
