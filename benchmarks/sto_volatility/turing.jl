@@ -9,20 +9,22 @@ using Turing
 
 Turing.setadbackend(:reverse_diff)
 
-@model sto_volatility(y, ::Type{Tv}=Vector{Float64}) where {Tv} = begin
+@model sto_volatility(y) = begin
     T = length(y)
     
     ϕ ~ Uniform(-1, 1)
     σ ~ truncated(Cauchy(0, 5), 0, Inf)
     μ ~ Cauchy(0, 10)
 
-    h = Tv(undef, T)
-    h[1] ~ Normal(μ, σ / sqrt(1 - ϕ^2))
+    h_std ~ MvNormal(T, 1.0)
+    h = σ .* h_std
+    h[1] /= sqrt(1 - ϕ^2)
+    h .+= μ
     for t in 2:T
-        h[t] ~ Normal(μ + ϕ * (h[t-1] - μ), σ)
+        h[t] += ϕ * (h[t-1] - μ)
     end
 
-    y ~ ArrayDist(Normal.(0, exp.(h / 2)))
+    y ~ MvNormal(exp.(h ./ 2))
 end
 
 model = sto_volatility(data["y"])
