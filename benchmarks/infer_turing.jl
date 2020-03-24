@@ -1,40 +1,38 @@
 Turing.setadbackend(:tracker)
 
-alg = HMC(step_size, n_steps)
-
 n_samples = 2_000
 
 chain = nothing
 
 using BenchmarkTools
-using ReverseDiff, Zygote
+using ReverseDiff, Memoization, Zygote
 
-function get_eval_functions(alg, model)
-    vi = Turing.VarInfo(model)
-    spl = Turing.Sampler(alg, model)
-    # model(vi)
-    Turing.Core.link!(vi, spl)
-	function forward_model(x)
-		vi[spl] = x
-		model(vi)
-		Turing.getlogp(vi)
+function get_eval_functions(step_size, n_steps, model)
+    function forward_model(x)
+        spl = Turing.SampleFromPrior()
+        vi = Turing.VarInfo(model)
+        vi[spl] = x
+        model(vi, spl)
+        Turing.getlogp(vi)
     end
-    function gradient_forwarddiff(x)
-        Turing.Core.gradient_logp(Turing.Core.ForwardDiffAD{40}(), x, vi, model)
+    funcs = map(
+        (Turing.Core.ForwardDiffAD{40},
+        Turing.Core.ReverseDiffAD{true},
+        Turing.Core.TrackerAD,
+        Turing.Core.ZygoteAD,)
+    ) do adbackend
+        alg = HMC{adbackend}(step_size, n_steps)
+        vi = Turing.VarInfo(model)
+        spl = Turing.Sampler(alg, model)
+        Turing.Core.link!(vi, spl)
+        x -> Turing.Core.gradient_logp(adbackend(), x, vi, model, spl)
     end
-    function gradient_reversediff(x)
-        Turing.Core.gradient_logp(Turing.Core.ReverseDiffAD{true}(), x, vi, model)
-    end
-    function gradient_tracker(x)
-        Turing.Core.gradient_logp(Turing.Core.TrackerAD(), x, vi, model)
-    end
-    function gradient_zygote(x)
-        Turing.Core.gradient_logp(Turing.Core.ZygoteAD(), x, vi, model)
-    end
-    return vi[spl], forward_model, gradient_forwarddiff, gradient_reversediff, gradient_tracker, gradient_zygote
+    x = Turing.VarInfo(model)[Turing.SampleFromPrior()]
+
+    return (x, forward_model, funcs...,)
 end
 
-theta, forward_model, gradient_forwarddiff, gradient_reversediff, gradient_tracker, gradient_zygote = get_eval_functions(alg, model)
+theta, forward_model, gradient_forwarddiff, gradient_reversediff, gradient_tracker, gradient_zygote = get_eval_functions(step_size, n_steps, model)
 
 if "--benchmark" in ARGS
     using Logging: with_logger, NullLogger
@@ -49,6 +47,7 @@ if "--benchmark" in ARGS
     end
     n_runs = 3
     times = []
+    alg = HMC(step_size, n_steps)
     for i in 1:n_runs+1
         with_logger(NullLogger()) do    # disable numerical error warnings
             t = @elapsed sample(model, alg, n_samples; progress=false, raw_output=true)
@@ -89,5 +88,6 @@ elseif "--function" in ARGS
     @btime $gradient_tracker($theta)
     @btime $gradient_zygote($theta)
 else
+    alg = HMC(step_size, n_steps)
     @time chain = sample(model, alg, n_samples; progress_style=:plain)
 end

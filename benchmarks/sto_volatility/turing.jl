@@ -8,9 +8,6 @@ data = get_data(500)
 using ReverseDiff, Memoization, Turing
 using Turing.Core: arraydist
 
-Turing.setadbackend(:reversediff)
-Turing.setcache(true)
-
 @model sto_volatility(y, ::Type{Tv}=Vector{Float64}) where {Tv} = begin
     T = length(y)
     
