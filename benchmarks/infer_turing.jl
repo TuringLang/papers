@@ -12,12 +12,10 @@ using ReverseDiff, Zygote
 function get_eval_functions(alg, model)
     vi = Turing.VarInfo(model)
     spl = Turing.Sampler(alg, model)
-    # model(vi)
     Turing.Core.link!(vi, spl)
-	function forward_model(x)
-		vi[spl] = x
-		model(vi)
-		Turing.getlogp(vi)
+    function forward_model(x)
+        vi_new = Turing.VarInfo(vi, spl, x)
+        Turing.getlogp(Turing.runmodel!(model, vi_new, spl))
     end
     function gradient_forwarddiff(x)
         Turing.Core.gradient_logp(Turing.Core.ForwardDiffAD{40}(), x, vi, model)
