@@ -6,7 +6,7 @@ include("data.jl")
 data = get_data()
 
 using Turing
-using Turing.Core: filldist 
+using Turing.Core: filldist
 
 @model gauss_unknown(y) = begin
     N = length(y)
