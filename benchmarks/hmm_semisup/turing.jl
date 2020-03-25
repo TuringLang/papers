@@ -9,14 +9,15 @@ include("data.jl")
 data = get_data()
 
 using Turing
+using Turing.Core: filldist, arraydist
 
 using StatsFuns: logsumexp
 
 @model hmm_semisup(K, V, T, T_unsup, w, z, u, alpha, beta, ::Type{Tv}=Vector{Float64}) where {Tv} = begin
-    theta ~ Multi(Dirichlet(alpha), K)
-    phi ~ Multi(Dirichlet(beta), K)
-    w ~ ArrayDist(Categorical.(copy.(eachcol(phi[:, z]))))
-    z[2:end] ~ ArrayDist(Categorical.(copy.(eachcol(theta[:, z[1:end-1]]))))
+    theta ~ filldist(Dirichlet(alpha), K)
+    phi ~ filldist(Dirichlet(beta), K)
+    w ~ arraydist(Categorical.(copy.(eachcol(phi[:, z]))))
+    z[2:end] ~ arraydist(Categorical.(copy.(eachcol(theta[:, z[1:end-1]]))))
     gamma = log.(phi[u[1], 1:K])
     for t in 2:T_unsup
         gamma = mapreduce(vcat, 1:K) do k

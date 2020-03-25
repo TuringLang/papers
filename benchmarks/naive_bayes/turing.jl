@@ -9,10 +9,11 @@ include("data.jl")
 data = get_data()
 
 using Turing
+using Turing.Core: filldist, arraydist
 
 @model naive_bayes(image, label, D, N, C, ::Type{T}=Float64) where {T<:Real} = begin
-    m ~ Multi(Normal(0, 10), D, C)
-    image ~ ArrayDist(Normal.(m[:,label], 1))
+    m ~ filldist(Normal(0, 10), D, C)
+    image ~ arraydist(Normal.(m[:,label], 1))
 end 
 
 model = naive_bayes(data["image"], data["label"], data["D"], data["N"], data["C"])
