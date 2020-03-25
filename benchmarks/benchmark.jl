@@ -1,3 +1,6 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 results_fn = "results"
 
 models = [
@@ -44,7 +47,7 @@ let buffer=IOBuffer()   # use IOBuffer to deplay writing to the file in the end
         for ppl in ppls
             write(buffer, "[$ppl]\n")
             @info "Benchmarking $model using $ppl ..."
-            cmd = `julia $model/$ppl.jl --benchmark`
+            cmd = `julia $(projectdir("benchmarks", model, "$ppl.jl")) --benchmark`
             if "WANDB" in keys(ENV) && ENV["WANDB"] == "1"
                 # Logging to W&B
                 withenv("MODEL_NAME" => model) do
@@ -59,7 +62,7 @@ let buffer=IOBuffer()   # use IOBuffer to deplay writing to the file in the end
     end
     # Write to file
     results = take!(buffer)
-    open("$results_fn.txt", "w") do file
+    open(projectdir("benchmarks", "$results_fn.txt"), "w") do file
         write(file, results)
     end
 end

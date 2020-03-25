@@ -1,3 +1,6 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 using Random: seed!
 seed!(1)
 
@@ -5,7 +8,7 @@ include("data.jl")
 
 data = get_data(500)
 
-using ReverseDiff, Memoization, Turing
+using Turing
 using Turing.Core: arraydist
 
 @model sto_volatility(y, ::Type{Tv}=Vector{Float64}) where {Tv} = begin

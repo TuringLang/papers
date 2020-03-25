@@ -1,3 +1,6 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 using Random: seed!
 seed!(1)
 

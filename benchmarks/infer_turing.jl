@@ -1,38 +1,42 @@
-Turing.setadbackend(:tracker)
+using ReverseDiff, Memoization, Zygote
+Turing.setadbackend(:reversediff)
+Turing.setcache(true)
+
+alg = HMC(step_size, n_steps)
 
 n_samples = 2_000
 
 chain = nothing
 
 using BenchmarkTools
-using ReverseDiff, Memoization, Zygote
+
+const ADBACKENDS = Dict(
+    "forwarddiff" => Turing.Core.ForwardDiffAD{40},
+    "reversediff" => Turing.Core.ReverseDiffAD{true},
+    "tracker" => Turing.Core.TrackerAD,
+    # "zygote" => Turing.Core.ZygoteAD,
+)
 
 function get_eval_functions(step_size, n_steps, model)
+    spl_prior = Turing.SampleFromPrior()
     function forward_model(x)
-        spl = Turing.SampleFromPrior()
         vi = Turing.VarInfo(model)
-        vi[spl] = x
-        model(vi, spl)
+        vi[spl_prior] = x
+        model(vi, spl_prior)
         Turing.getlogp(vi)
     end
-    funcs = map(
-        (Turing.Core.ForwardDiffAD{40},
-        Turing.Core.ReverseDiffAD{true},
-        Turing.Core.TrackerAD,
-        Turing.Core.ZygoteAD,)
-    ) do adbackend
-        alg = HMC{adbackend}(step_size, n_steps)
+    grad_funcs = map(values(ADBACKENDS)) do adbackend
+        alg_ad = HMC{adbackend}(step_size, n_steps)
         vi = Turing.VarInfo(model)
-        spl = Turing.Sampler(alg, model)
+        spl = Turing.Sampler(alg_ad, model)
         Turing.Core.link!(vi, spl)
         x -> Turing.Core.gradient_logp(adbackend(), x, vi, model, spl)
     end
     x = Turing.VarInfo(model)[Turing.SampleFromPrior()]
-
-    return (x, forward_model, funcs...,)
+    return x, forward_model, grad_funcs
 end
 
-theta, forward_model, gradient_forwarddiff, gradient_reversediff, gradient_tracker, gradient_zygote = get_eval_functions(step_size, n_steps, model)
+theta, forward_model, grad_funcs = get_eval_functions(step_size, n_steps, model)
 
 if "--benchmark" in ARGS
     using Logging: with_logger, NullLogger
@@ -47,7 +51,6 @@ if "--benchmark" in ARGS
     end
     n_runs = 3
     times = []
-    alg = HMC(step_size, n_steps)
     for i in 1:n_runs+1
         with_logger(NullLogger()) do    # disable numerical error warnings
             t = @elapsed sample(model, alg, n_samples; progress=false, raw_output=true)
@@ -65,29 +68,24 @@ if "--benchmark" in ARGS
     println("  Running time: $t_mean +/- $t_std ($n_runs runs)")
     t_forward = @belapsed $forward_model($theta)
     println("  Forward time: $t_forward")
-    t_gradient_forwarddiff = @belapsed $gradient_forwarddiff($theta)
-    println("  Gradient time (ForwardDiff): $t_gradient_forwarddiff")
-    t_gradient_reversediff = @belapsed $gradient_reversediff($theta)
-    println("  Gradient time (ReverseDiff): $t_gradient_reversediff")
-    t_gradient_trakcer = @belapsed $gradient_tracker($theta)
-    println("  Gradient time (Tracker): $t_gradient_trakcer")
-    t_gradient_zygote = @belapsed $gradient_zygote($theta)
-    println("  Gradient time (Zygote): $t_gradient_zygote")
     if clog
-        wandb.run.summary.time_mean                 = t_mean
-        wandb.run.summary.time_std                  = t_std
-        wandb.run.summary.time_forward              = t_forward
-        wandb.run.summary.time_gradient_forwarddiff = t_gradient_forwarddiff
-        wandb.run.summary.time_gradient_trakcer     = t_gradient_trakcer
-        wandb.run.summary.time_gradient_zygote      = t_gradient_zygote
+        wandb.run.summary.time_mean = t_mean
+        wandb.run.summary.time_std = t_std
+        wandb.run.summary.time_forward = t_forward
+    end
+    for (name, grad_func) in zip(keys(ADBACKENDS), grad_funcs)
+        t = @belapsed $grad_func($theta)
+        println("  Gradient time ($name): $t")
+        if clog
+            s = Symbol("time_gradient_$name")
+            eval(:(wandb.run.summary.$s=$t))
+        end
     end
 elseif "--function" in ARGS
     @btime $forward_model($theta)
-    @btime $gradient_forwarddiff($theta)
-    @btime $gradient_reversediff($theta)
-    @btime $gradient_tracker($theta)
-    @btime $gradient_zygote($theta)
+    for grad_func in grad_funcs
+        @btime $grad_func($theta)
+    end
 else
-    alg = HMC(step_size, n_steps)
     @time chain = sample(model, alg, n_samples; progress_style=:plain)
 end

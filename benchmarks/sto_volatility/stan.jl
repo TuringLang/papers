@@ -1,3 +1,6 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 # Ref: https://github.com/stan-dev/example-models/blob/master/misc/moving-avg/stochastic-volatility.stan
 
 using Random: seed!

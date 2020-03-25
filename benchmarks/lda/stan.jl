@@ -1,3 +1,6 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 # Ref: https://github.com/stan-dev/example-models/blob/master/misc/cluster/lda/lda.stan
 
 using Random: seed!
