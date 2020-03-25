@@ -9,7 +9,6 @@ include("data.jl")
 data = get_data()
 
 using Turing
-using Turing.Core: filldist, arraydist
 
 import Distributions: logpdf, DiscreteUnivariateDistribution
 using SpecialFunctions: loggamma

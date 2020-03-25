@@ -9,7 +9,6 @@ include("data.jl")
 data = get_data()
 
 using Turing
-using Turing.Core: filldist
 
 @model lda(K, V, M, N, w, doc, alpha, beta, ::Type{T}=Float64) where {T} = begin
     theta = Matrix{T}(undef, K, M)

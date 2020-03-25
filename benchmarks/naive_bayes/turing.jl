@@ -9,7 +9,6 @@ include("data.jl")
 data = get_data()
 
 using Turing
-using Turing.Core: filldist, arraydist
 
 @model naive_bayes(image, label, D, N, C, ::Type{T}=Float64) where {T<:Real} = begin
     m ~ filldist(Normal(0, 10), D, C)

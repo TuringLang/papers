@@ -9,7 +9,6 @@ include("data.jl")
 data = get_data()
 
 using Turing
-using Turing.Core: filldist, arraydist
 
 @model logistic_reg(X, y) = begin
     D, N = size(X)

@@ -9,7 +9,6 @@ include("data.jl")
 data = get_data()
 
 using Turing
-using Turing.Core: filldist
 
 @model high_dim_gauss(D) = begin
     m ~ filldist(Normal(0, 1), D)
