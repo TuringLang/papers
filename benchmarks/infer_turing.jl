@@ -82,8 +82,10 @@ if "--benchmark" in ARGS
         end
     end
 elseif "--function" in ARGS
+    println("Forward time")
     @btime $forward_model($theta)
-    for grad_func in grad_funcs
+    for (name, grad_func) in zip(keys(ADBACKENDS), grad_funcs)
+        println("Gradient time ($name)")
         @btime $grad_func($theta)
     end
 else
