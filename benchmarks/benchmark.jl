@@ -14,6 +14,7 @@ models = [
     "lda",
 ]
 
+# TODO: support pass in a list of models
 for m in models
     if "--$(m)-only" in ARGS
         global models, results_fn
