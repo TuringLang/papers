@@ -10,8 +10,6 @@ include("data.jl")
 
 data = get_data()
 
-using CmdStan
-
 const model_str = "
 data {
   int<lower=1> K;  // num categories

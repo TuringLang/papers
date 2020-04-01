@@ -8,8 +8,6 @@ include("data.jl")
 
 data = get_data()
 
-using CmdStan
-
 const model_str = "
 data {
   int C;

@@ -10,8 +10,6 @@ include("data.jl")
 
 data = get_data(500)
 
-using CmdStan
-
 const model_str = "
 data {
   int<lower=0> T;   // # time points (equally spaced)
