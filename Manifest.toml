@@ -195,8 +195,8 @@ version = "0.22.6"
 
 [[DistributionsAD]]
 deps = ["Combinatorics", "Compat", "DiffRules", "Distributions", "FillArrays", "ForwardDiff", "LinearAlgebra", "MacroTools", "NaNMath", "PDMats", "Random", "ReverseDiff", "SpecialFunctions", "StaticArrays", "StatsBase", "StatsFuns", "Tracker", "Zygote", "ZygoteRules"]
-git-tree-sha1 = "258d566604c543e1c1e883908a14798b4b4baa55"
-repo-rev = "mt/reversediffx"
+git-tree-sha1 = "67ff4b205fa39b050402d2597b0d2ed233cd750d"
+repo-rev = "master"
 repo-url = "https://github.com/TuringLang/DistributionsAD.jl.git"
 uuid = "ced4e74d-a319-5a8a-b0ac-84af2272839c"
 version = "0.4.9"
