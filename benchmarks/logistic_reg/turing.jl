@@ -1,3 +1,6 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 using Random: seed!
 seed!(1)
 
@@ -13,7 +16,6 @@ lazyarray(f, x) = LazyArray(Base.broadcasted(f, x))
     w ~ filldist(Normal(0, 1), D)
     p = logistic.(X' * w)
     y ~ arraydist(lazyarray(Bernoulli, p))
-    return
 end
 
 model = logistic_reg(data["X"], data["y"])

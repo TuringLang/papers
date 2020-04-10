@@ -22,7 +22,7 @@
 
 using BenchmarkTools
 
-using PyCall
+using PyCall: pyimport
 pystan = pyimport("pystan")
 sm = pystan.StanModel(model_code=model_str)
 fit_stan(n_iters=2_000) = sm.sampling(
