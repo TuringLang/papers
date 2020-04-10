@@ -5,19 +5,23 @@ include("data.jl")
 
 data = get_data()
 
-using Turing
+using LazyArrays, Memoization, Turing
 
+lazyarray(f, x) = LazyArray(Base.broadcasted(f, x))
 @model logistic_reg(X, y) = begin
     D, N = size(X)
-    w ~ Multi(Normal(0, 1), D)
+    w ~ filldist(Normal(0, 1), D)
     p = logistic.(X' * w)
-    y ~ ArrayDist(Bernoulli.(p))
+    y ~ arraydist(lazyarray(Bernoulli, p))
+    return
 end
 
 model = logistic_reg(data["X"], data["y"])
 
 step_size = 0.1
 n_steps = 4
+test_zygote = false
+test_tracker = true
 
 include("../infer_turing.jl")
 

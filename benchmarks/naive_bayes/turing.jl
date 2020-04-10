@@ -5,17 +5,23 @@ include("data.jl")
 
 data = get_data()
 
-using Turing
+using LazyArrays, Memoization, Turing
 
+lazyarray(f, x...) = LazyArray(Base.broadcasted(f, x...))
 @model naive_bayes(image, label, D, N, C, ::Type{T}=Float64) where {T<:Real} = begin
-    m ~ Multi(Normal(0, 10), D, C)
-    image ~ ArrayDist(Normal.(m[:,label], 1))
+    m ~ filldist(Normal(0, 10), D, C)
+    image ~ arraydist(lazyarray(Normal, m[:,label], 1))
 end 
 
-model = naive_bayes(data["image"], data["label"], data["D"], data["N"], data["C"])
+N = 10
+D = data["D"]
+model = naive_bayes(data["image"][1:D, 1:N], data["label"][1:N], data["D"], data["N"], data["C"])
 
 step_size = 0.1
 n_steps = 4
+
+test_zygote = false
+test_tracker = false
 
 include("../infer_turing.jl")
 

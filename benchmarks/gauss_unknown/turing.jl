@@ -5,7 +5,7 @@ include("data.jl")
 
 data = get_data()
 
-using Turing
+using Memoization, LazyArrays, Turing
 using Turing.Core: filldist
 
 @model gauss_unknown(y) = begin
@@ -19,6 +19,8 @@ model = gauss_unknown(data["y"])
 
 step_size = 0.01
 n_steps = 4
+test_zygote = true
+test_tracker = true
 
 include("../infer_turing.jl")
 

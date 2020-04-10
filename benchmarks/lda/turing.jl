@@ -5,12 +5,11 @@ include("data.jl")
 
 data = get_data()
 
-using Turing
+using Memoization, Turing
 
 @model lda(K, V, M, N, w, doc, alpha, beta, ::Type{T}=Float64) where {T} = begin
-    theta = Matrix{T}(undef, K, M)
-    theta ~ Multi(Dirichlet(alpha), M)
-    phi ~ Multi(Dirichlet(beta), K)
+    theta ~ filldist(Dirichlet(alpha), M)
+    phi ~ filldist(Dirichlet(beta), K)
     log_phi_dot_theta = log.(phi * theta)
     @logpdf() += sum(log_phi_dot_theta[CartesianIndex.(w, doc)])
 end
@@ -19,6 +18,8 @@ model = lda(data["K"], data["V"], data["M"], data["N"], data["w"], data["doc"], 
 
 step_size = 0.01
 n_steps = 4
+test_zygote = true
+test_tracker = true
 
 include("../infer_turing.jl")
 
