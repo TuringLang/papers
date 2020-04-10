@@ -1,6 +1,6 @@
 using ReverseDiff, Memoization, Zygote
 Turing.setadbackend(:reversediff)
-Turing.setcache(true)
+Turing.setrdcache(true)
 
 alg = HMC(step_size, n_steps)
 n_samples = 2_000
@@ -107,5 +107,7 @@ elseif "--function" in ARGS
         @btime $grad_func($theta)
     end
 else
-    @time chain = sample(model, alg, n_samples; progress_style=:plain)
+    with_logger(NullLogger()) do    # disable numerical error warnings
+        @time chain = sample(model, alg, n_samples; progress_style=:plain, chain_type=Any)
+    end
 end

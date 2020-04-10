@@ -84,7 +84,7 @@ version = "0.5.0"
 
 [[Bijectors]]
 deps = ["ArgCheck", "Compat", "Distributions", "LinearAlgebra", "MappedArrays", "NNlib", "Random", "Reexport", "Requires", "Roots", "SparseArrays", "Statistics", "StatsFuns"]
-git-tree-sha1 = "6a10da37e527fa5015c796f3d7c14a853e8febc9"
+git-tree-sha1 = "0f89986e4f6a2d35eb1b9965b87bb1726c600875"
 repo-rev = "mt/rd_custom_grad"
 repo-url = "https://github.com/TuringLang/Bijectors.jl.git"
 uuid = "76274a88-744f-5084-9051-94815aaf08c4"
@@ -199,7 +199,7 @@ version = "0.22.6"
 
 [[DistributionsAD]]
 deps = ["Combinatorics", "Compat", "DiffRules", "Distributions", "FillArrays", "ForwardDiff", "LinearAlgebra", "MacroTools", "NaNMath", "PDMats", "Random", "Requires", "SpecialFunctions", "StaticArrays", "StatsBase", "StatsFuns", "Tracker", "Zygote", "ZygoteRules"]
-git-tree-sha1 = "d14d6835829ac9d0295cc52c9ab55922c6aafcbb"
+git-tree-sha1 = "97663740d3a803de6d7d4c0c1e28ffe29642cb8d"
 repo-rev = "mt/refactor"
 repo-url = "https://github.com/TuringLang/DistributionsAD.jl.git"
 uuid = "ced4e74d-a319-5a8a-b0ac-84af2272839c"

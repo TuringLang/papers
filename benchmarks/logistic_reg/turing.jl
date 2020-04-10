@@ -8,13 +8,14 @@ include("data.jl")
 
 data = get_data()
 
-using LazyArrays, Memoization, Turing
+using LazyArrays, ReverseDiff, Memoization, Turing
 
 lazyarray(f, x) = LazyArray(Base.broadcasted(f, x))
+safelogistic(x::T) where {T} = logistic(x) * (1 - 2 * eps(T)) + eps(T)
 @model logistic_reg(X, y) = begin
     D, N = size(X)
     w ~ filldist(Normal(0, 1), D)
-    p = logistic.(X' * w)
+    p = safelogistic.(X' * w)
     y ~ arraydist(lazyarray(Bernoulli, p))
 end
 

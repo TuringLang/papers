@@ -11,7 +11,7 @@ data = get_data()
 using LazyArrays, Memoization, Turing
 
 lazyarray(f, x...) = LazyArray(Base.broadcasted(f, x...))
-@model naive_bayes(image, label, D, N, C, ::Type{T}=Float64) where {T<:Real} = begin
+@model naive_bayes(image, label, D, N, C) = begin
     m ~ filldist(Normal(0, 10), D, C)
     image ~ arraydist(lazyarray(Normal, m[:,label], 1))
 end 

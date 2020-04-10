@@ -1,14 +1,13 @@
 using DrWatson
 @quickactivate "TuringExamples"
 
+using ReverseDiff, Memoization, Zygote, Turing
 using Random: seed!
 seed!(1)
 
 include("data.jl")
 
 data = get_data()
-
-using Memoization, Turing
 
 @model lda(K, V, M, N, w, doc, alpha, beta, ::Type{T}=Float64) where {T} = begin
     theta ~ filldist(Dirichlet(alpha), M)
