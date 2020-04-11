@@ -15,8 +15,7 @@ safelogistic(x::T) where {T} = logistic(x) * (1 - 2 * eps(T)) + eps(T)
 @model logistic_reg(X, y) = begin
     D, N = size(X)
     w ~ filldist(Normal(0, 1), D)
-    p = safelogistic.(X' * w)
-    y ~ arraydist(lazyarray(Bernoulli, p))
+    y ~ arraydist(lazyarray(x -> Bernoulli(safelogistic(x)), X' * w))
 end
 
 model = logistic_reg(data["X"], data["y"])
