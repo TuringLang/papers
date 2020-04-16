@@ -8,7 +8,7 @@ include("data.jl")
 
 data = get_data()
 
-using Memoization, LazyArrays, Turing
+using Memoization, Turing
 using Turing.Core: filldist
 
 @model gauss_unknown(y) = begin

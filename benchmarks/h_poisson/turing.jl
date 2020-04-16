@@ -10,17 +10,6 @@ data = get_data()
 
 using Memoization, LazyArrays, Turing
 
-import Distributions: logpdf, DiscreteUnivariateDistribution
-using SpecialFunctions: loggamma
-
-struct LogPoisson{T<:Real} <: DiscreteUnivariateDistribution
-    alpha::T
-end
-
-function logpdf(lp::LogPoisson, k::Int)
-    return k * lp.alpha - exp(lp.alpha) - loggamma(k + 1)
-end
-
 lazyarray(f, x) = LazyArray(Base.broadcasted(f, x))
 @model h_poisson(y, x, idx, N, Ns) = begin
     a0 ~ Normal(0, 10)
