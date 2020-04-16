@@ -9,7 +9,7 @@ include("data.jl")
 
 data = get_data()
 
-@model lda(K, V, M, N, w, doc, alpha, beta, ::Type{T}=Float64) where {T} = begin
+@model lda(K, V, M, N, w, doc, alpha, beta) = begin
     theta ~ filldist(Dirichlet(alpha), M)
     phi ~ filldist(Dirichlet(beta), K)
     log_phi_dot_theta = log.(phi * theta)

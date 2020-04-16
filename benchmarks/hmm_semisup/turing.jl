@@ -39,7 +39,7 @@ end
 
 model = hmm_semisup(data["K"], data["T_unsup"], data["w"], data["z"], data["u"], data["alpha"], data["beta"])
 
-step_size = 0.0001
+step_size = 0.00001
 n_steps = 4
 test_zygote = false
 test_tracker = false
