@@ -24,7 +24,7 @@ parameters {
 }
 transformed parameters {
   vector[N] p;
-  p = inv_logit(XT * w);
+  p = (inv_logit(XT * w) * (1 - 4e-16)) + 2e-16;
 }
 model {
   w ~ normal(0, 1);
