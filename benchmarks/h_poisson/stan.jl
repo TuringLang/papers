@@ -33,7 +33,7 @@ model {
 }
 "
 
-step_size = 0.01
+step_size = 0.001
 n_steps = 4
 
 include("../infer_stan.jl")

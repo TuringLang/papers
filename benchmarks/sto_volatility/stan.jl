@@ -22,9 +22,9 @@ parameters {
   vector[T] h;                 // log volatility at time t
 }
 model {
+  mu ~ cauchy(0, 10);
   phi ~ uniform(-1, 1);
   sigma ~ cauchy(0, 5);
-  mu ~ cauchy(0, 10);  
   h[1] ~ normal(mu, sigma / sqrt(1 - phi * phi));
   for (t in 2:T)
     h[t] ~ normal(mu + phi * (h[t - 1] -  mu), sigma);

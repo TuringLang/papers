@@ -107,7 +107,5 @@ elseif "--function" in ARGS
         @btime $grad_func($theta)
     end
 else
-    with_logger(NullLogger()) do    # disable numerical error warnings
-        @time chain = sample(model, alg, n_samples; progress_style=:plain, chain_type=Any)
-    end
+    @time chain = sample(model, alg, n_samples; progress_style=:plain, chain_type=Any)
 end

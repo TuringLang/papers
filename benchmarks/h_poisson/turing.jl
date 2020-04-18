@@ -22,7 +22,7 @@ end
 
 model = h_poisson(data["y"], data["x"], data["idx"], data["N"], data["Ns"])
 
-step_size = 0.01
+step_size = 0.001
 n_steps = 4
 test_zygote = false
 test_tracker = true

@@ -13,9 +13,9 @@ using Turing
 @model sto_volatility(y, ::Type{Tv}=Vector{Float64}) where {Tv} = begin
     T = length(y)
 
+    μ ~ Cauchy(0, 10)
     ϕ ~ Uniform(-1, 1)
     σ ~ truncated(Cauchy(0, 5), 0, Inf)
-    μ ~ Cauchy(0, 10)
 
     h = Tv(undef, T)
     h[1] ~ Normal(μ, σ / sqrt(1 - ϕ^2))
