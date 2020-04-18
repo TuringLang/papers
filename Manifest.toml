@@ -222,7 +222,7 @@ version = "1.10.2"
 
 [[DynamicPPL]]
 deps = ["AbstractMCMC", "Bijectors", "Distributions", "MacroTools"]
-git-tree-sha1 = "62ddb5be50266a01971b04b065dbf5f8e08134c9"
+git-tree-sha1 = "565d0a928f273041154d8fd3765923b0b4fa26fa"
 repo-rev = "mt/neurips"
 repo-url = "https://github.com/TuringLang/DynamicPPL.jl.git"
 uuid = "366bfd00-2699-11ea-058f-f148b4cae6d8"
