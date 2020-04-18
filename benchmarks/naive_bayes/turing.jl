@@ -28,6 +28,8 @@ test_tracker = false
 
 include("../infer_turing.jl")
 
+# Before uncommenting the code below, make sure chain_type is not Any in infer_turing.jl
+#=
 # Save result
 
 if !isnothing(chain)
@@ -44,3 +46,4 @@ if !isnothing(chain)
 
     bson("result.bson", m_bayes=m_bayes)
 end
+=#
