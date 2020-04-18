@@ -9,6 +9,26 @@ include("data.jl")
 
 data = get_data()
 
+#=
+@model lda_unvectorized(K, V, M, N, w, doc, alpha, beta, ::Type{T}=Float64) where {T} = begin
+    theta = Matrix{T}(undef, K, M)
+    for i in 1:M
+        theta[:,i] ~ Dirichlet(alpha)
+    end
+    phi = Matrix{T}(undef, V, K)
+    for i in 1:K
+        phi[:,i] ~ Dirichlet(beta)
+    end
+    for i in 1:N
+        temp = zero(T)
+        for k in 1:K
+            temp += phi[w[i],k] * theta[k,doc[i]]
+        end
+        @logpdf() += log(temp)
+    end
+end
+=#
+
 @model lda_unvectorized(K, V, M, N, w, doc, alpha, beta, ::Type{T}=Float64) where {T} = begin
     theta = Matrix{T}(undef, K, M)
     for i in 1:M
