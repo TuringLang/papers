@@ -6,7 +6,7 @@ seed!(1)
 
 include("data.jl")
 
-data = get_data (; is_columnmajor=false)
+data = get_data()
 
 const model_str = "
 data {

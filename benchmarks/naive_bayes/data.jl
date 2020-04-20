@@ -18,10 +18,10 @@ image = transform(pca, image_raw)
 
 # Data function
 
-get_data(n=1_000, is_columnmajor) = Dict(
+get_data(n=1_000) = Dict(
     "C" => 10,
     "D" => D_pca,
     "N" => n,
-    "image" => is_columnmajor ? transpose(image[:,1:n]) : image[:,1:n],
-    "label" => label[1:n]
+    "image" => copy(transpose(image[:,1:n])),
+    "label" => label[1:n],
 )
