@@ -1,11 +1,12 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 using Random: seed!
 seed!(1)
 
 include("data.jl")
 
 data = get_data (; is_columnmajor=false)
-
-using CmdStan
 
 const model_str = "
 data {

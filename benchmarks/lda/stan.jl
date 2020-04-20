@@ -1,3 +1,6 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 # Ref: https://github.com/stan-dev/example-models/blob/master/misc/cluster/lda/lda.stan
 
 using Random: seed!
@@ -6,8 +9,6 @@ seed!(1)
 include("data.jl")
 
 data = get_data()
-
-using CmdStan
 
 const model_str = "
 data {
@@ -25,6 +26,7 @@ parameters {
   simplex[V] phi[K];     // word dist for topic k
 }
 model {
+  real tmp;
   for (m in 1:M)
     theta[m] ~ dirichlet(alpha);  // prior
   for (k in 1:K)
