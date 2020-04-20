@@ -6,7 +6,7 @@
 # )
 
 # model = Stanmodel(
-    # model=model_str, 
+    # model=model_str,
     # nchains=1,
     # Sample(
         # algorithm=alg,
@@ -24,16 +24,19 @@ using BenchmarkTools
 
 using PyCall: pyimport
 pystan = pyimport("pystan")
-sm = pystan.StanModel(model_code=model_str)
+sm = pystan.StanModel(model_code=model_str,
+  extra_compile_args = ["-ftemplate-depth-256", "-O3",
+   "-mtune=native", "-march=native", "-pipe", "-fno-trapping-math",
+    "-funroll-loops", "-funswitch-loops"])
 fit_stan(n_iters=2_000) = sm.sampling(
-    data=data, iter=n_iters, chains=1, warmup=0, algorithm="HMC", 
+    data=data, iter=n_iters, chains=1, warmup=0, algorithm="HMC",
     control=Dict(
-        "adapt_engaged" => false, 
+        "adapt_engaged" => false,
         # HMC
-        "int_time" => n_steps * step_size, 
+        "int_time" => n_steps * step_size,
         "metric" => "diag_e",
-        "stepsize" => step_size, 
-        "stepsize_jitter" => 0, 
+        "stepsize" => step_size,
+        "stepsize_jitter" => 0,
     )
 )
 f = fit_stan(100)
