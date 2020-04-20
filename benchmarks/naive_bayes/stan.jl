@@ -22,12 +22,10 @@ parameters {
 model {
   for (d in 1:D) {
     m[, d] ~ normal(0, 10);
-  }
-
-  for (d in 1:D) {
     image[, d] ~ normal(m[label, d], 1);
   }
 }
+
 "
 
 step_size = 0.1

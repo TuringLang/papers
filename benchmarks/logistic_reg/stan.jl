@@ -20,7 +20,7 @@ parameters {
 }
 model {
   w ~ normal(0, 1);
-  y ~ bernoulli_logit_glm(X, 1.0, w);
+  y ~ bernoulli_logit_glm(X, 0.0, w);
 }
 "
 

@@ -26,13 +26,16 @@ parameters {
   simplex[V] phi[K];     // word dist for topic k
 }
 model {
-  real tmp;
-  for (m in 1:M)
+  for (m in 1:M) {
     theta[m] ~ dirichlet(alpha);  // prior
-  for (k in 1:K)
+  }
+  for (k in 1:K) {
     phi[k] ~ dirichlet(beta);     // prior
+  }
   for (n in 1:N) {
-    target += log_sum_exp(log(theta[doc[n],]) + to_vector(log(phi[,w[n]])));  // likelihood
+    for (k in 1:K) {
+      target += log(theta[doc[n],k] * phi[k,w[n]]);
+    }
   }
 }
 "
