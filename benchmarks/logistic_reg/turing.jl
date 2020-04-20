@@ -13,9 +13,9 @@ using LazyArrays, ReverseDiff, Memoization, Turing
 lazyarray(f, x) = LazyArray(Base.broadcasted(f, x))
 safelogistic(x::T) where {T} = logistic(x) * (1 - 2 * eps(T)) + eps(T)
 @model logistic_reg(X, y) = begin
-    D, N = size(X)
+    N, D = size(X)
     w ~ filldist(Normal(0, 1), D)
-    y ~ arraydist(lazyarray(x -> Bernoulli(safelogistic(x)), X' * w))
+    y ~ arraydist(lazyarray(x -> Bernoulli(safelogistic(x)), X * w))
 end
 
 model = logistic_reg(data["X"], data["y"])
