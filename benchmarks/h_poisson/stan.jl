@@ -1,11 +1,12 @@
+using DrWatson
+@quickactivate "TuringExamples"
+
 using Random: seed!
 seed!(1)
 
 include("data.jl")
 
 data = get_data()
-
-using CmdStan
 
 const model_str = "
 data {
@@ -32,7 +33,7 @@ model {
 }
 "
 
-step_size = 0.01
+step_size = 0.001
 n_steps = 4
 
 include("../infer_stan.jl")

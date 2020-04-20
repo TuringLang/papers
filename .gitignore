@@ -1,3 +1,5 @@
+.ipynb_checkpoints
+.vscode
 tmp
 wandb
 result.bson
