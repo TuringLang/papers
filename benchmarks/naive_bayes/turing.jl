@@ -8,17 +8,16 @@ include("data.jl")
 
 data = get_data()
 
-using LazyArrays, Memoization, Turing
+using Memoization, Turing
 
-lazyarray(f, x...) = LazyArray(Base.broadcasted(f, x...))
-@model naive_bayes(image, label, D, N, C) = begin
+@model naive_bayes(image_vec, label, D, N, C) = begin
     m ~ filldist(Normal(0, 10), C, D)
-    image ~ arraydist(lazyarray(Normal, m[label,:], 1))
+    image_vec ~ MvNormal(vec(m[label,:]), 1)
 end
 
 N = 10
 D = data["D"]
-model = naive_bayes(data["image"][1:N, 1:D], data["label"][1:N], data["D"], data["N"], data["C"])
+model = naive_bayes(vec(data["image"][1:N, 1:D]), data["label"][1:N], data["D"], data["N"], data["C"])
 
 step_size = 0.1
 n_steps = 4
