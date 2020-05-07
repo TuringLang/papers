@@ -12,23 +12,15 @@ const model_str = "
 data {
   int D;
   int N;
-  matrix[D,N] X;
+  matrix[N, D] X;
   int<lower=0,upper=1> y[N];
-}
-transformed data {
-  matrix[N,D] XT;
-  XT = X';
 }
 parameters {
   vector[D] w;
 }
-transformed parameters {
-  vector[N] p;
-  p = (inv_logit(XT * w) * (1 - 4e-16)) + 2e-16;
-}
 model {
   w ~ normal(0, 1);
-  y ~ bernoulli(p);
+  y ~ bernoulli_logit_glm(X, 0.0, w);
 }
 "
 

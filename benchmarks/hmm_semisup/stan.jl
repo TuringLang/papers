@@ -38,14 +38,14 @@ model {
 
   {
     // forward algorithm computes log p(u|...)
-    real acc[K];
+    vector[K] acc;
     real gamma[T_unsup,K];
-    for (k in 1:K)
-      gamma[1,k] = log(phi[k,u[1]]);
+    gamma[1,] = log(phi[,u[1]]);
     for (t in 2:T_unsup) {
       for (k in 1:K) {
-        for (j in 1:K)
+        for (j in 1:K) {
           acc[j] = gamma[t-1,j] + log(theta[j,k]) + log(phi[k,u[t]]);
+        }
         gamma[t,k] = log_sum_exp(acc);
       }
     }

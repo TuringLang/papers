@@ -20,10 +20,10 @@ function get_data(nd=5, ns=10, a0=1, a1=0.5, a0_sig=0.3)
         end
     end
     return Dict(
-        "y" => y, 
-        "x" => x, 
-        "idx" => idx, 
-        "N" => n, 
+        "y" => y,
+        "x" => x,
+        "idx" => idx,
+        "N" => n,
         "Ns" => ns,
     )
 end

@@ -12,13 +12,13 @@ using LazyArrays, Memoization, Turing
 
 lazyarray(f, x...) = LazyArray(Base.broadcasted(f, x...))
 @model naive_bayes(image, label, D, N, C) = begin
-    m ~ filldist(Normal(0, 10), D, C)
-    image ~ arraydist(lazyarray(Normal, m[:,label], 1))
-end 
+    m ~ filldist(Normal(0, 10), C, D)
+    image ~ arraydist(lazyarray(Normal, m[label,:], 1))
+end
 
 N = 10
 D = data["D"]
-model = naive_bayes(data["image"][1:D, 1:N], data["label"][1:N], data["D"], data["N"], data["C"])
+model = naive_bayes(data["image"][1:N, 1:D], data["label"][1:N], data["D"], data["N"], data["C"])
 
 step_size = 0.1
 n_steps = 4
@@ -39,7 +39,7 @@ if !isnothing(chain)
 
     m_bayes = mean(
         map(
-            i -> reconstruct(pca, Matrix{Float64}(reshape(m_data[i,:,1], D_pca, 10))), 
+            i -> reconstruct(pca, Matrix{Float64}(reshape(m_data[i,:,1], D_pca, 10))),
             1_000:100:2_000
         )
     )
