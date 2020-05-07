@@ -34,7 +34,7 @@ using StatsFuns: logsumexp
         end
         gamma .= temp_gamma
     end
-    @logpdf() += logsumexp(gamma)
+    Turing.acclogp!(_varinfo, logsumexp(gamma))
 end
 
 model = hmm_semisup(data["K"], data["T_unsup"], data["w"], data["z"], data["u"], data["alpha"], data["beta"])

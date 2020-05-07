@@ -24,7 +24,7 @@ data = get_data()
         for k in 1:K
             temp += phi[w[i],k] * theta[k,doc[i]]
         end
-        @logpdf() += log(temp)
+        Turing.acclogp!(_varinfo, log(temp))
     end
 end
 =#
@@ -40,7 +40,7 @@ end
     end
     log_phi_dot_theta = log.(phi * theta)
     for i in 1:length(w)
-        @logpdf() += log_phi_dot_theta[w[i], doc[i]]
+        Turing.acclogp!(_varinfo, log_phi_dot_theta[w[i], doc[i]])
     end
 end
 

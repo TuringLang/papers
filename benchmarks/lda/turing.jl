@@ -13,7 +13,7 @@ data = get_data()
     theta ~ filldist(Dirichlet(alpha), M)
     phi ~ filldist(Dirichlet(beta), K)
     log_phi_dot_theta = log.(phi * theta)
-    @logpdf() += sum(log_phi_dot_theta[CartesianIndex.(w, doc)])
+    Turing.acclogp!(_varinfo, sum(log_phi_dot_theta[CartesianIndex.(w, doc)]))
 end
 
 model = lda(data["K"], data["V"], data["M"], data["N"], data["w"], data["doc"], data["alpha"], data["beta"])
